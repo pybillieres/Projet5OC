@@ -1,25 +1,20 @@
 <?php
 require 'vendor/autoload.php';
-use Model\Movie;
-use Model\MovieManager;
-
-$manager = new MovieManager;
-var_dump($manager->lastMovie());
+use Framework\Router;
 
 
-/*
-<!doctype html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8">
-  <title>Titre de la page</title>
-  <base href="/projet5/">
-  <script src=public/js/ajax.js></script>
-  <script src=public/js/home.js></script>
-  <script src=public/js/main.js></script>
-</head>
-<body>
+$router = new Router;
+$router->routeRequest();
 
-</body>
-</html>
-*/
+
+
+//class view ?
+//create environment with default config
+/*$loader = new \Twig\Loader\FilesystemLoader('View');
+$twig = new \Twig\Environment($loader, [
+    'cache' => FALSE/*'/path/to/compilation_cache',  //penser a remettre le cache
+]);
+
+$template = $twig->load('index.php');
+
+echo $twig->render('home.php', ['titi' => 'roro']);*/

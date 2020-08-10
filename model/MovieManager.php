@@ -10,7 +10,7 @@ class MovieManager extends Manager
 
     }
 
-    public function lastMovie()
+    public function lastMovies()//10 DERNIER FILMS
     {
         $req = $this->_db->prepare('SELECT * FROM movies ORDER BY title DESC LIMIT 0,10');
         $req->execute();
@@ -22,5 +22,5 @@ class MovieManager extends Manager
         return $movies;
     }
 
-
+    
 }
