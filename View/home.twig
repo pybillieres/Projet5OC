@@ -4,5 +4,11 @@
 
 {% block content %}
     <h1>Derniers Films</h1>
-    
+    {% for movie in movies %}
+        <div class=movies id={{movie.idDb}}>
+            <h2>{{movie.title}}</h2>
+            <p >{{movie.id}}</p>
+            <p>{{movie.idDb}}</p>
+        </div>
+    {% endfor %}
 {% endblock %}

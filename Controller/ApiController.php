@@ -15,7 +15,7 @@ class ApiController extends Controller
     function lastMovies()
     {
         $controller = new MovieController;
-        $movies = $controller->lastMovies(1);
+        $movies = $controller->lastMoviesApi();
         foreach ($movies as $movie)
         {
             $data['id'] = $movie->id();
@@ -31,25 +31,11 @@ class ApiController extends Controller
 
     }
 
-    /*function utf8ize($d) {
-        if (is_array($d)) {
-            foreach ($d as $k => $v) {
-                $d[$k] = $this->utf8ize($v);
-            }
-        } else if (is_string ($d)) {
-            return utf8_encode($d);
-        }
-        return $d;
-    }*/
-
 
     function reponse_json($data) { //penser a ajouter variable sucess true or false
 
-        //var_dump($array);
         $array['result'] = $data;
-        //$arr = array('a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5);
-        //header('Content-Type: application/json');
+        header('Content-Type: application/json');
         echo json_encode($array);
-        //echo json_encode($arr);
     }
 }
