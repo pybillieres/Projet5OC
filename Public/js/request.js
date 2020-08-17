@@ -1,9 +1,11 @@
 
 class Request
 {
+
 constructor()
 {
-
+    this.key = 'fd9a8abc18ee876e061e656506b72565';
+    this.baseUrl = "http://image.tmdb.org/t/p/";
 }
 
 selectById()
@@ -13,23 +15,41 @@ selectById()
     for (const element of movies){
         idElements.push(element.id);
     }
-    this.request(idElements);
+    return idElements;
     
 }
 
-request(idElements)
+
+request(idElements, callBack)
 {
-    console.log(idElements, 'toto');
+    var films = [];
     for (const element of idElements)
     {
-        console.log(element);
-        ajaxGet('https://api.themoviedb.org/3/configuration?api_key=fd9a8abc18ee876e061e656506b72565', function(response){
-            var config = JSON.parse(response);
-            console.log(config);}); 
-        ajaxGet('https://api.themoviedb.org/3/movie/'+element+'?api_key=fd9a8abc18ee876e061e656506b72565&language=fr', function(response){
-            var films = JSON.parse(response);
-            console.log(films);});  
+        ajaxGet('https://api.themoviedb.org/3/movie/'+element+'?api_key='+this.key+'&language=fr', function(response){
+            films.push(JSON.parse(response));});  
     }
+    callBack(films);
+}
+
+getPoster()
+{
+    var idElements = this.selectById();
+    this.request(idElements, function(response){
+        var films = [];
+        films = response;
+        console.log(films);
+        films.forEach(function(film){
+            var posterPath = this.baseUrl + film.poster_path;
+            console.log(posterPath);
+            document.getElementById(film.id).src = posterPath;
+        })
+        });
+
+
+}
+
+getInformation()
+{
 
 }
 

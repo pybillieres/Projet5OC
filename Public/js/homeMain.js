@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function(){
 var MyRequest = new Request();
-MyRequest.selectById();
+//MyRequest.getPoster();
+MyRequest.getPoster();
 });
