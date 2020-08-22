@@ -37,19 +37,43 @@ getPoster()
     this.request(idElements, function(response){
         var films = [];
         films = response;
-        console.log(films);
+        console.log(films.length);
         films.forEach(function(film){
-            var posterPath = this.baseUrl + film.poster_path;
+            var posterPath = this.baseUrl + "w92" + film.poster_path;
+            console.log(film.title);
             console.log(posterPath);
             document.getElementById(film.id).src = posterPath;
-        })
-        });
+        }.bind(this))
+        }.bind(this));
 
 
 }
 
-getInformation()
+getDetails()
 {
+    var idElements = this.selectById();
+    this.request(idElements, function(response){
+        var film = response[0];
+        var posterPath = this.baseUrl + "w92" + film.poster_path; //revoir eventuelement dimensions demandées
+        var releaseDate = film.release_date;
+        var genres = film.genres;//voir si moyen de simplifier conversion array string pour les genres
+        var genresString = "";
+        for (var i = 0; i < genres.length; i++) {
+            var genre = genres[i].name;
+            if(i < genres.length - 1)
+            {
+                genresString = genresString + genre + ', ';    
+            }
+            else
+            {
+                genresString = genresString + genre;  
+            }
+          }
+        document.getElementById("poster").src = posterPath;
+        document.getElementById("releaseDate").textContent = releaseDate;
+        document.getElementById("genres").textContent = genresString;
+        }.bind(this));
+
 
 }
 

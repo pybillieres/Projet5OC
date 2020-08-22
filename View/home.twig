@@ -7,9 +7,10 @@
     {% for movie in movies %}
         <div>
         <img src="" class=movies id={{movie.idDb}}>
-            <h2>{{movie.title}}</h2>
+            <a href=Movie/MovieDetails/{{movie.id}}><h2>{{movie.title}}</h2></a>
             <p >{{movie.id}}</p>
             <p>{{movie.idDb}}</p>
         </div>
     {% endfor %}
+  <script src="public/js/homeMain.js"></script>
 {% endblock %}

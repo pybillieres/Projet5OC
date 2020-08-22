@@ -19,13 +19,12 @@ class MovieController extends Controller
         echo $this->twig->render('home.twig', ['movies' => $movies]);
     }
 
-    //FONCTION DE L'API
-
-    function lastMoviesApi()
+    function movieDetails()
     {
+        $id = $this->request->Parameter('id');
         $manager = new MovieManager;
-        $movies = $manager->lastMovies();
-        return $movies;
+        $movie = $manager->movieDetails($id);
+        echo $this->twig->render('details.twig', ['movie' => $movie]);
     }
 
 

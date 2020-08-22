@@ -3,7 +3,7 @@ namespace Model;
 
 use Framework\Manager;
 
-class ReviewManager extends Manager
+class UserManager extends Manager
 {
 
 }

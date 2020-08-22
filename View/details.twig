@@ -1,0 +1,14 @@
+{% extends 'layout.twig' %}
+
+{% block head %}<title>{{movie.title}}</title>{% endblock %}
+
+{% block content %}
+    <img src="" id='poster'>
+    <h1 class='movies' id={{movie.idDb}}>{{movie.title}}</h1>
+    <p>Date de sortie : <span id='releaseDate'></span></p>
+    <p>Genre : <span id='genres'></span></p>
+
+
+
+  <script src="public/js/detailsMain.js"></script>
+{% endblock %}

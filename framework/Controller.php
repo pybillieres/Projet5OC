@@ -17,11 +17,6 @@ abstract class Controller
 
   }
 
-    /*public function createView($data)
-    {
-      var_dump($this->request->Parameter('controller'));
-      echo $this->twig->render('home.twig', ['movies' => $data]);
-    }*/
 
     public function setRequest(Request $request) {
       $this->request = $request;
