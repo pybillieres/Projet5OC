@@ -5,6 +5,7 @@ use Framework\Request;
 use Controller\MovieController;
 use Controller\ReviewController;
 use Controller\ApiController;
+use Controller\ConnectionController;
 
 
 
