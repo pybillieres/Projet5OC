@@ -4,13 +4,41 @@
 
 {% block content %}
     <h1>Derniers Films</h1>
-    {% for movie in movies %}
-        <div>
-        <img src="" class=movies id={{movie.idDb}}>
-            <a href=Movie/MovieDetails/{{movie.id}}><h2>{{movie.title}}</h2></a>
-            <p >{{movie.id}}</p>
-            <p>{{movie.idDb}}</p>
+    <div class="col-12">
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" id="orderBy">Trier Par :</button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#" id="OrderByDate">Le Plus récent</a>
+          <a class="dropdown-item" href="#" id="OrderByLastReview">Derniers avis</a>
+          <a class="dropdown-item" href="#" id="OrderByPopularity">Populaire</a>
         </div>
-    {% endfor %}
+      </div>
+    </div>
+        <a href=""id="movie1" ><div><img id="poster1" src=""><p id="title1"></p></div></a>
+        <a href="" id="movie2"><div><img id="poster2" src=""><p id="title2"></p></div></a>
+        <a href="" id="movie3"><div><img id="poster3" src=""><p id="title3"></p></div></a>
+        <a href="" id="movie0"><div><img id="poster0" src=""><p id="title0"></p></div></a>
+        <a href="" id="movie4"><div><img id="poster4" src=""><p id="title4"></p></div></a>
+        <a href="" id="movie5"><div><img id="poster5" src=""><p id="title5"></p></div></a>
+        <a href="" id="movie6"><div><img id="poster6" src=""><p id="title6"></p></div></a>
+        <a href="" id="movie7"><div><img id="poster7" src=""><p id="title7"></p></div></a>
+        <a href="" id="movie8"><div><img id="poster8" src=""><p id="title8"></p></div></a>
+        <a href="" id="movie9"><div><img id="poster9" src=""><p id="title9"></p></div></a>
+        <a href="" id="movie10"><div><img id="poster10" src=""><p id="title10"></p></div></a>
+        <a href="" id="movie11"><div><img id="poster11" src=""><p id="title11"></p></div></a>
+        <a href="" id="movie12"><div><img id="poster12" src=""><p id="title12"></p></div></a>
+        <a href="" id="movie13"><div><img id="poster13" src=""><p id="title13"></p></div></a>
+        <a href="" id="movie14"><div><img id="poster14" src=""><p id="title14"></p></div></a>
+        <a href="" id="movie15"><div><img id="poster15" src=""><p id="title15"></p></div></a>
+        <a href="" id="movie16"><div><img id="poster16" src=""><p id="title16"></p></div></a>
+        <a href="" id="movie17"><div><img id="poster17" src=""><p id="title17"></p></div></a>
+        <a href="" id="movie18"><div><img id="poster18" src=""><p id="title18"></p></div></a>
+        <a href="" id="movie19"><div><img id="poster19" src=""><p id="title19"></p></div></a>
+        <a href="" id="movie20"><div><img id="poster20" src=""><p id="title20"></p></div></a>
+        <div class="col-12">
+          <a class="btn btn-lg btn-primary" id="prvPage" href="#">Précédent</a>
+          <a class="btn btn-lg btn-primary" disabled id="pageIndex">1</a>
+          <a class="btn btn-lg btn-primary" id="nxtPage" href="#">Suivant</a>
+        </div>
   <script src="public/js/homeMain.js"></script>
 {% endblock %}

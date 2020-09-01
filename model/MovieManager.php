@@ -24,13 +24,18 @@ class MovieManager extends Manager
 
     public function movieDetails($id)
     {
-        $req = $this->_db->prepare('SELECT * FROM movies WHERE id=?');
+        $req = $this->_db->prepare('SELECT * FROM movies WHERE idDb=?');
         $req->execute(array($id));
-        while($row = $req->fetch())
+        $row = $req->fetch();
+        if(is_bool($row) !== true)
         {
             $movie = new Movie($row); //essayer de changer ca et de fetch sans boucle;
+            return $movie;
         }
-        return $movie;
+        else
+        {
+            return false;
+        }
     }
     
 }

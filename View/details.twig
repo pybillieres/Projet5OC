@@ -4,11 +4,16 @@
 
 {% block content %}
     <img src="" id='poster'>
-    <h1 class='movies' id={{movie.idDb}}>{{movie.title}}</h1>
+    <h1 class='movie' id={{movie.idDb}}>{{movie.title}}</h1>
     <p>Date de sortie : <span id='releaseDate'></span></p>
     <p>Genre : <span id='genres'></span></p>
 
+    <h2>Derniers Avis</h2>
+    {% for review in reviews %}
+      <p>{{review.pseudo}}<br/>{{review.content}}</p>
+    {% endfor %}
 
-
+  <script src="public/js/details.js"></script>
   <script src="public/js/detailsMain.js"></script>
+
 {% endblock %}

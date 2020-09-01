@@ -2,11 +2,16 @@
 namespace Controller;
 
 use Framework\Controller;
+use Model\ReviewManager;
 
 class ReviewController extends Controller
 {
-    function index()
+
+
+    function getReviews($id)
     {
-        echo 'titi';
+        $manager = new ReviewManager;
+        $reviews = $manager->getReviewsByFilm($id);
+        return $reviews;
     }
 }

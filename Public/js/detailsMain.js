@@ -1,4 +1,3 @@
 document.addEventListener('DOMContentLoaded', function(){
-    var MyRequest = new Request();
-    MyRequest.getDetails();
+    var MyDetails = new Details();
     });
