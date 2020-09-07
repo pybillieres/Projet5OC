@@ -1,9 +1,9 @@
 {% extends 'layout.twig' %}
 
-{% block head %}<title>Accueil</title>{% endblock %}
+{% block head %}<title>résultats de la recherche</title>{% endblock %}
 
 {% block content %}
-    <h1 id="pageTitle"></h1>
+    <h1 id="pageTitle">Résultats de la recherche pour "<span id="searchTitle">{{keyword}}</span>"</h1>
     <div class="col-12" id="orderBy">
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" id="orderBy">Trier Par :</button>
@@ -42,5 +42,6 @@
           <a class="btn btn-lg btn-primary" id="nxtPage" href="Movie/lastMovies/{{page + 1}}">Suivant</a>
         </div>
     </div>
-  <script src="public/js/homeMain.js"></script>
+  <script src="public/js/searchMain.js"></script>
+  
 {% endblock %}

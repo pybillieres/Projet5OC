@@ -15,9 +15,33 @@ class MovieController extends Controller
 
     function lastMovies()
     {
+        if($this->request->existParameter('id'))//est ce que je peux laisser ca avec 'id' ?
+        {
+        $page = $this->request->Parameter('id');   
+        }
+        else
+        {
+            $page = 1;
+        }
+        
         $manager = new MovieManager;
         $movies = $manager->lastMovies();
-        echo $this->twig->render('home.twig');
+        echo $this->twig->render('home.twig', ['page' => $page]);
+    }
+
+    function Search()
+    {
+        $keyword = $this->request->Parameter('searchKeyword');
+        if($this->request->existParameter('id'))
+        {
+        $page = $this->request->Parameter('id');   
+        }
+        else
+        {
+            $page = 1;
+        }
+        var_dump($keyword);
+        echo $this->twig->render('searchResults.twig', ['keyword' => $keyword, 'page' => $page]);
     }
 
     function movieDetails()

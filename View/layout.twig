@@ -4,7 +4,8 @@
   <meta charset="utf-8">
   {% block head %}{% endblock %}
   <base href="/projet5/">
-
+  <link rel="stylesheet" href="content/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="public/css/style.css">
 </head>
 <body>
 
@@ -21,21 +22,26 @@
             <a class="nav-link" href="Connection">Connexion</a>
           </li>
         </ul>
+        <form class="form-inline my-2 my-lg-0" action="index.php">
+            <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Search" id="searchKeyword" name="searchKeyword">
+            <input type="hidden" name='action' value='search'>
+            <input type="hidden" name='controller' value='movie'>
+            <input class="btn btn-outline-success my-2 my-sm-0" type="submit">
+        </form>
       </div>
     </nav>
 
 {% block content%}{% endblock %}
 
 
-  <link rel="stylesheet" href="content/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="public/css/style.css">
+
+
   <script src="content/jquery-3.5.1.min.js"></script>
   <script src="content/bootstrap/js/bootstrap.bundle.js"></script>
   <script src="content/bootstrap/js/bootstrap.js"></script>
-
-
   <script src="public/js/ajax.js"></script>
   <script src="public/js/overview.js"></script>
+  <script src="public/js/searchMain.js"></script>
 
 </body>
 

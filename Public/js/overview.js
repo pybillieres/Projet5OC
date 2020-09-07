@@ -4,20 +4,15 @@ class Overview
     {
         this.key = 'fd9a8abc18ee876e061e656506b72565';
         this.baseUrl = "http://image.tmdb.org/t/p/";
-        this.index = 1;
+        this.index = document.getElementById("pageIndex").textContent;
         this.sortBy = "release_date.desc"; 
-        this.Init();
+        //this.Init();
     }
 
-    Init()
+    /*Init()
     {
-        document.getElementById("prvPage").addEventListener("click", function(){this.PreviousPage()}.bind(this));
-        document.getElementById("nxtPage").addEventListener("click", function(){this.NextPage()}.bind(this));
-        document.getElementById("OrderByDate").addEventListener("click", function(){this.OrderByDate()}.bind(this));
-        document.getElementById("OrderByLastReview").addEventListener("click", function(){this.OrderByLastReview()}.bind(this));
-        document.getElementById("OrderByPopularity").addEventListener("click", function(){this.OrderByPopularity()}.bind(this));
         this.createView();
-    }
+    }*/
 
 
     ListRequest(sortBy, page, callBack)
@@ -28,11 +23,20 @@ class Overview
         callBack(films)
     }
 
+    SearchRequest(title, callBack)
+    {
+        var films;
+        ajaxGet('https://api.themoviedb.org/3/search/movie?api_key='+this.key+'&language=fr&query='+title+'&page=1&include_adult=false', function(response){
+            films = JSON.parse(response);});
+        callBack(films)
+    }
+
     createView()//comment nommer cette fonction ?
     {
+        console.log('test1');
         this.ListRequest(this.sortBy, this.index, function(response){
             var films = response.results;
-            var nbrPages = response.total_pages;
+            console.log(response);
             for (let i=0; i<20; i++)
             {
                 this.View(i, films[i]);
@@ -40,25 +44,19 @@ class Overview
         }.bind(this));
     }
 
-    NextPage()
-    {
-        this.index ++;
-        this.createView()
-        document.getElementById("pageIndex").textContent = this.index;
-    }
-
-    PreviousPage()
-    {
-        this.index --;
-        this.createView()
-        document.getElementById("pageIndex").textContent = this.index;
-    }
-
     View(index, film)
     {
         var id = film.id;
         var title = film.title;
-        var posterPath = this.baseUrl + "w92" + film.poster_path; //revoir dimensions du poster
+        if(film.poster_path != null)
+        {
+            var posterPath = this.baseUrl + "w92" + film.poster_path; //revoir dimensions du poster
+        }
+        else
+        {
+            var posterPath = "public/posterDefault.jpg";
+        }
+        
         document.getElementById("poster" + [index]).src = posterPath; //penser a gerer le cas ou le posterPath n'est pas fourni (=>remplacer par image grise)
         document.getElementById("title" + [index]).textContent = title;
         document.getElementById("movie" + [index]).href = "Movie/MovieDetails/" + id;
@@ -82,5 +80,20 @@ class Overview
         this.index = 1;
         this.sortBy = "popularity.desc"
         this.createView();
+    }
+
+    searchFilm()
+    {
+        console.log(document.getElementById("searchTitle").textContent);
+        var title = document.getElementById("searchTitle").innerText;
+        console.log(title);
+        this.SearchRequest(title, function(response){
+            var films = response.results;
+            var nbrPages = response.total_pages;
+            for (let i=0; i<20; i++)
+            {
+                this.View(i, films[i]);
+            }
+        }.bind(this));
     }
 }

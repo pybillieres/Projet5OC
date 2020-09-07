@@ -51,6 +51,11 @@ class ConnectionController extends Controller
         }
     }
 
+    function createAccount()
+    {
+        echo $this->twig->render("createAccount.twig");
+    }
+
     function logout()
     {
 
