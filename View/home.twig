@@ -4,13 +4,14 @@
 
 {% block content %}
     <h1 id="pageTitle"></h1>
-    <div class="col-12" id="orderBy">
+    <div class="col-12" id="sortBy">
       <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" id="orderBy">Trier Par :</button>
+      <span>Trier par : </span>
+        <button class="btn btn-secondary dropdown-toggle " type="button" data-toggle="dropdown"><span class={{orderBy['parameter']}} id="orderBy">{{orderBy['label']}}</span></button>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="#" id="OrderByDate">Le Plus récent</a>
-          <a class="dropdown-item" href="#" id="OrderByLastReview">Derniers avis</a>
-          <a class="dropdown-item" href="#" id="OrderByPopularity">Populaire</a>
+          <a class="dropdown-item" href="Movie/lastMovies">Le Plus récent</a>
+          <a class="dropdown-item" href="Movie/orderByReviews">Avis le plus récent</a>
+          <a class="dropdown-item" href="Movie/orderByPopularity">Le plus populaire</a>
         </div>
       </div>
     </div>

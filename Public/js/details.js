@@ -31,6 +31,7 @@ class Details
         this.request(id, function(response){
             var film = response;
             console.log(film);
+            var title = film.title;
             var posterPath = this.baseUrl + "w92" + film.poster_path; //revoir eventuelement dimensions demandées
             var releaseDate = film.release_date;
             var genres = film.genres;//voir si moyen de simplifier conversion array string pour les genres
@@ -46,6 +47,7 @@ class Details
                     genresString = genresString + genre;  
                 }
               }
+            document.getElementById("title").textContent = title;
             document.getElementById("poster").src = posterPath;
             document.getElementById("releaseDate").textContent = releaseDate;
             document.getElementById("genres").textContent = genresString;

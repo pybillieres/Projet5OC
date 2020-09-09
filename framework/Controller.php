@@ -17,12 +17,20 @@ abstract class Controller
 
   }
 
+  public function checkSession()
+  {
+   return $this->request->getSession()->existAttribut("userId");
+  }
 
     public function setRequest(Request $request) {
       $this->request = $request;
     }
    
-   
+    protected function redirect($controller, $action='', $id='')
+ {
+  $racineWeb = Configuration::get("racineWeb", "/");
+  header('Location: ' . $racineWeb . $controller . '/' . $action . '/'.$id);
+ }
     public function executeAction($action) {
       if (method_exists($this, $action)) {
         $this->action = $action;
