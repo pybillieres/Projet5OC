@@ -2,7 +2,6 @@
 namespace Controller;
 
 use Framework\Controller;
-use Model\MovieManager;
 use Controller\ReviewController;
 
 class MovieController extends Controller
@@ -24,7 +23,7 @@ class MovieController extends Controller
             $page = 1;
         }
         $orderBy = ['label' => 'Le plus récent', 'parameter' => 'release_date.desc'];
-        echo $this->twig->render('home.twig', ['page' => $page, 'orderBy' => $orderBy]);
+        $this->View('home.twig', ['page' => $page, 'orderBy' => $orderBy]);
     }
 
     function orderByReviews()
@@ -52,7 +51,7 @@ class MovieController extends Controller
             $page = 1;
         }
         $orderBy = ['label' => 'Le plus populaire', 'parameter' => 'popularity.desc'];
-        echo $this->twig->render('home.twig', ['page' => $page, 'orderBy' => $orderBy]);
+        $this->View('home.twig', ['page' => $page, 'orderBy' => $orderBy]);
     }
 
     function Search()
@@ -66,17 +65,11 @@ class MovieController extends Controller
         {
             $page = 1;
         }
-        var_dump($this->request);
-        echo $this->twig->render('searchResults.twig', ['keyword' => $keyword, 'page' => $page]);
+        $this->View('home.twig', ['keyword' => $keyword, 'page' => $page]);
     }
 
     function movieDetails()
     {
-        /*$id = $this->request->Parameter('id');
-        $controller = new ReviewController;
-        $movie = $controller->reviewsById($id);
-        if(is_bool($movie) !== true)
-        {*/
             $id = $this->request->Parameter('id');
             $reviewController = new ReviewController;
             $reviews = $reviewController->getReviews($id);
@@ -86,14 +79,8 @@ class MovieController extends Controller
             }
             else
             {
-                echo $this->twig->render('details.twig', ["idMovie"=>$id]);
+                $this->View('details.twig', ["idMovie"=>$id]);
             }
-            
-        /*}
-        else
-        {
-            echo $this->twig->render('details.twig', ["idMovie"=>$id]);//creer vue pour films sans commentaires
-        }*/
     }
 
 

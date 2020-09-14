@@ -46,11 +46,12 @@ class ReviewController extends Controller
     {
         if($this->checkSession())
         {
+            var_dump($this->request->Parameter('rating'));
             $pseudo = $this->request->getSession()->getAttribut('login');
             $content = $this->request->parameter('content');
             $date = date("Y-m-d H:i");
             $idMovie = $this->request->Parameter('idMovie');
-            $rating = '0';
+            $rating = $this->request->Parameter('rating');
             $data = ['pseudo' => $pseudo, 'content' => $content, 'date' => $date, 'idMovie' => $idMovie, 'rating' => $rating];
             $review = new Review($data);
             $manager = new ReviewManager;

@@ -11,8 +11,7 @@ class UserController extends SecureController
 
     public function UserHome()
     {
-        echo $this->twig->render('UserHome.twig');
-        
+        $this->View('UserHome.twig');
     }
 
 

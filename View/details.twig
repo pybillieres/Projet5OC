@@ -11,8 +11,15 @@
 {% if reviews is defined %}
     <h2>Derniers Avis</h2>
     {% for review in reviews %}
+      <div class="rating">
+        {% for i in 1..5 %}
+          {% set starClass = (review.rating >= i ? "fas fa-star" : "far fa-star")  %}
+            <i class="{{ starClass }}"></i>
+          {% endfor %}
+      </div>
       <p>{{review.pseudo}}<br/>{{review.content}}</p>
     {% endfor %}
+  <a href='Review/newReview/{{idMovie}}'>Laisser un avis</a>
 {% endif %}
 {% if reviews is null %}
       <p>Pas encore d'avis sur ce film</p>

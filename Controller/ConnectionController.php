@@ -13,7 +13,7 @@ class ConnectionController extends Controller
 
     function connectionView()
     {
-        echo $this->twig->render('connection.twig');
+        $this->View('connection.twig');
     }
 
     function login()
@@ -31,8 +31,8 @@ class ConnectionController extends Controller
                 {
                     $this->request->getSession()->setAttribut('userId', $user->id());
                     $this->request->getSession()->setAttribut('login', $user->login());
-                    $controller = new UserController;
-                    $controller->UserHome();
+
+                    $this->redirect('User', 'UserHome');
                 }
                 else
                 {
@@ -53,11 +53,12 @@ class ConnectionController extends Controller
 
     function createAccount()
     {
-        echo $this->twig->render("createAccount.twig");
+        $this->View("createAccount.twig");
     }
 
     function logout()
     {
-
+        $this->request->getSession()->destroySession();
+        $this->connectionView();
     }
 }

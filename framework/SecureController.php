@@ -11,7 +11,7 @@ abstract class SecureController extends Controller
             parent::executeAction($action);
         }
         else {
-            //a voir
+            $this->redirect('connection');
         }
     }
 

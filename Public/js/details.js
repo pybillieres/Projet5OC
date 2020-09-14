@@ -20,17 +20,14 @@ class Details
         var film;
         ajaxGet('https://api.themoviedb.org/3/movie/'+id+'?api_key='+this.key+'&language=fr', function(response){
             film = JSON.parse(response);}.bind(this));  
-            console.log(film);
         callBack(film);
     }
 
     getDetails()
     {
         var id = this.selectById();
-        console.log(id);
         this.request(id, function(response){
             var film = response;
-            console.log(film);
             var title = film.title;
             var posterPath = this.baseUrl + "w92" + film.poster_path; //revoir eventuelement dimensions demandées
             var releaseDate = film.release_date;

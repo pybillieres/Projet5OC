@@ -22,16 +22,32 @@ abstract class Controller
    return $this->request->getSession()->existAttribut("userId");
   }
 
-    public function setRequest(Request $request) {
-      $this->request = $request;
-    }
+
+  public function CheckAdmin()
+  {
+    
+  }
+  public function setRequest(Request $request) {
+    $this->request = $request;
+  }
    
-    protected function redirect($controller, $action='', $id='')
- {
+  public function View($template, $data = [])
+  {        
+    if($this->request->getSession()->existAttribut('login'))
+    {
+      $user = $this->request->getSession()->getAttribut('login');
+      $data['user'] = $user ;
+    }
+    echo $this->twig->render($template, $data);
+  }
+
+  protected function redirect($controller, $action='', $id='')
+  {
   $racineWeb = Configuration::get("racineWeb", "/");
   header('Location: ' . $racineWeb . $controller . '/' . $action . '/'.$id);
- }
-    public function executeAction($action) {
+  }
+   
+  public function executeAction($action) {
       if (method_exists($this, $action)) {
         $this->action = $action;
         $this->{$this->action}();

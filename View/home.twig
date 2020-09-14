@@ -2,11 +2,12 @@
 
 {% block head %}<title>Accueil</title>{% endblock %}
 
+
 {% block content %}
     <h1 id="pageTitle"></h1>
     <div class="col-12" id="sortBy">
       <div class="dropdown">
-      <span>Trier par : </span>
+      <span>Trier par : </span></i>
         <button class="btn btn-secondary dropdown-toggle " type="button" data-toggle="dropdown"><span class={{orderBy['parameter']}} id="orderBy">{{orderBy['label']}}</span></button>
         <div class="dropdown-menu">
           <a class="dropdown-item" href="Movie/lastMovies">Le Plus récent</a>
