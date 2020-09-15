@@ -14,7 +14,7 @@ class MovieController extends Controller
 
     function lastMovies()
     {
-        if($this->request->existParameter('id'))//est ce que je peux laisser ca avec 'id' ?
+        if($this->request->existParameter('id') && $this->request->Parameter('id')>0)
         {
         $page = $this->request->Parameter('id');   
         }
@@ -22,13 +22,13 @@ class MovieController extends Controller
         {
             $page = 1;
         }
-        $orderBy = ['label' => 'Le plus récent', 'parameter' => 'release_date.desc'];
+        $orderBy = ['label' => 'Le plus récent', 'parameter' => 'release_date.desc', 'action' => 'lastMovies'];
         $this->View('home.twig', ['page' => $page, 'orderBy' => $orderBy]);
     }
 
     function orderByReviews()
     {
-        if($this->request->existParameter('id'))//est ce que je peux laisser ca avec 'id' ?
+        if($this->request->existParameter('id') && $this->request->Parameter('id')>0)
         {
         $page = $this->request->Parameter('id');   
         }
@@ -36,13 +36,14 @@ class MovieController extends Controller
         {
             $page = 1;
         }
-        $controller = new ReviewController;
-        $reviews = $controller->lastReviewsId(); 
+        $orderBy = ['label' => 'Avis le plus récent', 'parameter' => 'lastComment'];
+        $this->View('home.twig', ['page' => $page, 'orderBy' => $orderBy]);
+
     }
 
     function orderByPopularity()
     {
-        if($this->request->existParameter('id'))//est ce que je peux laisser ca avec 'id' ?
+        if($this->request->existParameter('id') && $this->request->Parameter('id')>0)
         {
         $page = $this->request->Parameter('id');   
         }
@@ -50,14 +51,14 @@ class MovieController extends Controller
         {
             $page = 1;
         }
-        $orderBy = ['label' => 'Le plus populaire', 'parameter' => 'popularity.desc'];
+        $orderBy = ['label' => 'Le plus populaire', 'parameter' => 'popularity.desc', 'action' => 'orderByPopularity'];
         $this->View('home.twig', ['page' => $page, 'orderBy' => $orderBy]);
     }
 
     function Search()
     {
         $keyword = $this->request->Parameter('keyword');
-        if($this->request->existParameter('id'))
+        if($this->request->existParameter('id') && $this->request->Parameter('id')>0)
         {
         $page = $this->request->Parameter('id');   
         }
@@ -65,7 +66,7 @@ class MovieController extends Controller
         {
             $page = 1;
         }
-        $this->View('home.twig', ['keyword' => $keyword, 'page' => $page]);
+        $this->View('home.twig', ['keyword' => $keyword, 'page' => $page, 'action' => 'Search']);
     }
 
     function movieDetails()
@@ -75,7 +76,7 @@ class MovieController extends Controller
             $reviews = $reviewController->getReviews($id);
             if($reviews !== null)
             {
-                echo $this->twig->render('details.twig', ['reviews' => $reviews, "idMovie"=>$id]);    
+                $this->View('details.twig', ['reviews' => $reviews, "idMovie"=>$id]);  
             }
             else
             {

@@ -16,7 +16,7 @@ class ReviewController extends Controller
         return $reviews;
     }
 
-    function lastReviewsId()
+    function lastReviewsId($page = 1)
     {
         $manager = new ReviewManager;
         $reviews = $manager->getLastReviews();
@@ -24,8 +24,23 @@ class ReviewController extends Controller
         {
             $id=$review->idMovie();
             $reviewsId[] = $id;
+            $reviewsId = array_unique($reviewsId);
+            if(count($reviewsId) >= 20*$page)
+            {
+            break;
+            }
         }
-        return $reviewsId;
+        if($page == 1)
+        {
+        return $reviewsId;    
+        }
+        else
+        {
+            $to = $page-1*20;
+            $from = $page*20-1;
+            return array_slice($reviewsId, $to, $from);
+        }
+        
     }
 
     function newReview()
@@ -37,7 +52,7 @@ class ReviewController extends Controller
         }
         else
         {
-            echo $this->twig->render('connection.twig');
+            $this->redirect('connection');
         }
 
     }
@@ -62,6 +77,19 @@ class ReviewController extends Controller
 
     function MyReviews()
     {
+
+    }
+
+    function reportReview()
+    {
+
+            $id = $this->request->Parameter('id');
+            $reviewManager = new ReviewManager;
+            $review = $reviewManager->getReviewById($id);
+            $review->setReported(1);
+            $reviewManager->updateReview($review);
+            $this->View('report.twig', ['idMovie'=>$review->idMovie()]);
+            //$this->redirect('movie', 'movieDetails', $review->idMovie());
 
     }
 }

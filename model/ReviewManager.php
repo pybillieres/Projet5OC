@@ -23,6 +23,16 @@ class ReviewManager extends Manager
         
     }
 
+    function getReviewById($id)
+    {
+        $req = $this->_db->prepare('SELECT * FROM reviews WHERE id=?');
+        $req->execute(array($id));
+        $row= $req->fetch();
+        $review = new Review($row);
+        var_dump($review);
+        return $review;   
+    }
+
     function getLastReviews()
     {
         $req = $this->_db->prepare('SELECT * FROM reviews ORDER BY date DESC LIMIT 0,20');
@@ -53,6 +63,28 @@ class ReviewManager extends Manager
                 ':date'=>$review->date(),
                 ':rating'=>$review->rating()));
 
+    }
+
+    function updateReview(Review $review)
+    {
+
+        var_dump($review);
+        /*$req=$this->_db->prepare('UPDATE reviews SET idMovie=:idMovie, pseudo=:pseudo, content=:content, date=:date, rating=:rating reported=:reported WHERE id=:id');
+        $req->execute(array(
+                ':id'=>$review->id(),
+                ':idMovie'=>$review->idMovie(), 
+                ':pseudo'=>$review->pseudo(), 
+                ':content'=>$review->content(), 
+                ':date'=>$review->date(),
+                ':rating'=>$review->rating(),
+                ':reported'=>$review->reported()));
+*/
+            var_dump($review->id(), $review->reported());
+            $req=$this->_db->prepare('UPDATE reviews SET reported=:reported WHERE id=:id');
+            $req->execute(array(
+                ':id'=>$review->id(),
+                ':reported'=>$review->reported()
+            ));
     }
 
 }

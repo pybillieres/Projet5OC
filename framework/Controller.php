@@ -26,7 +26,10 @@ abstract class Controller
   public function CheckAdmin()
   {
     
+    return ($this->request->getSession()->getAttribut("admin") == 1);
+
   }
+
   public function setRequest(Request $request) {
     $this->request = $request;
   }

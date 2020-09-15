@@ -17,13 +17,21 @@
             <i class="{{ starClass }}"></i>
           {% endfor %}
       </div>
-      <p>{{review.pseudo}}<br/>{{review.content}}</p>
+      <p>{{review.pseudo}}<br/>{{review.content}}<br/><a href="review/reportReview/{{review.id}}">signaler le commentaire</a></p>
     {% endfor %}
-  <a href='Review/newReview/{{idMovie}}'>Laisser un avis</a>
+              {% if user is null %}
+              <p> Vous devez être connecté pour laisser un avis <a href="Connection">Se connecter</a></p>
+            {% else %}
+                <a href='Review/newReview/{{idMovie}}'>Laisser un avis</a>
+            {% endif %}
 {% endif %}
 {% if reviews is null %}
       <p>Pas encore d'avis sur ce film</p>
-      <a href='Review/newReview/{{idMovie}}'>Laisser un avis</a>
+            {% if user is null %}
+              <p> Vous devez être connecté pour laisser un avis <a href="Connection">Se connecter</a></p>
+            {% else %}
+                <a href='Review/newReview/{{idMovie}}'>Laisser un avis</a>
+            {% endif %}
 {% endif %}
   <script src="public/js/details.js"></script>
   <script src="public/js/detailsMain.js"></script>

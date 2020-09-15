@@ -39,9 +39,9 @@
         <a href="" id="movie19" class="col-lg-3"><div><img id="poster19" src=""><p id="title19"></p></div></a>
         <a href="" id="movie20" class="col-lg-3"><div><img id="poster20" src=""><p id="title20"></p></div></a>
         <div class="col-12">
-          <a class="btn btn-lg btn-primary" id="prvPage" href="#">Précédent</a>
+          <a class="btn btn-lg btn-primary" id="prvPage" href="Movie/{{orderBy['action']}}/{{page - 1}}">Précédent</a>
           <a class="btn btn-lg btn-primary" disabled id="pageIndex">{{page}}</a>
-          <a class="btn btn-lg btn-primary" id="nxtPage" href="Movie/lastMovies/{{page + 1}}">Suivant</a>
+          <a class="btn btn-lg btn-primary" id="nxtPage" href="Movie/{{orderBy['action']}}/{{page + 1}}">Suivant</a>
         </div>
     </div>
   <script src="public/js/homeMain.js"></script>

@@ -10,7 +10,8 @@ class Review extends ObjectClass
             $_pseudo,
             $_date,
             $_rating,
-            $_content;
+            $_content,
+            $_reported;
 
     public function id()
     {
@@ -42,6 +43,11 @@ class Review extends ObjectClass
         return $this->_content;
     }
 
+    public function reported()
+    {
+        return $this->_reported;
+    }
+
     public function setId($id)
     {
         $this->_id = $id;
@@ -70,5 +76,10 @@ class Review extends ObjectClass
     public function setContent($content)
     {
         $this->_content = $content;
+    }
+
+    public function setReported($reported)
+    {
+        $this->_reported = $reported;
     }
 }

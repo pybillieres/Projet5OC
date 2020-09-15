@@ -31,7 +31,7 @@ class ConnectionController extends Controller
                 {
                     $this->request->getSession()->setAttribut('userId', $user->id());
                     $this->request->getSession()->setAttribut('login', $user->login());
-
+                    $this->request->getSession()->setAttribut('admin', $user->admin());
                     $this->redirect('User', 'UserHome');
                 }
                 else
@@ -56,6 +56,7 @@ class ConnectionController extends Controller
         $this->View("createAccount.twig");
     }
 
+    
     function logout()
     {
         $this->request->getSession()->destroySession();

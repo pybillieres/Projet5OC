@@ -12,10 +12,32 @@ class ApiController extends Controller
 
     }
 
+    function lastReviewsApi()
+    {
+        
+        if($this->request->existParameter('id'))
+        {
+        $page = $this->request->Parameter('id');   
+        }
+        else
+        {
+            $page = 1;
+        }
+        $controller = new ReviewController;
+        $reviews = $controller->lastReviewsId($page); 
+        foreach ($reviews as $review)
+        {
+            $data['id'] = $review;
+            $datas[] = $data;
+        } 
+        $this->reponse_json($reviews);
+        
+    }
+
     function lastMovies()
     {
         $controller = new MovieController;
-        $movies = $controller->lastMoviesApi();
+        $movies = $controller->lastReviewsApi($page);
         foreach ($movies as $movie)
         {
             $data['id'] = $movie->id();

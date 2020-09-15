@@ -6,13 +6,7 @@ class Overview
         this.baseUrl = "http://image.tmdb.org/t/p/";
         this.index = document.getElementById("pageIndex").textContent;
         this.sortBy = document.getElementById("orderBy").className;
-        //this.Init();
     }
-
-    /*Init()
-    {
-        this.createView();
-    }*/
 
 
     ListRequest(sortBy, page, callBack)
@@ -31,12 +25,42 @@ class Overview
         callBack(films)
     }
 
+    MovieByIdRequest(idElements, callBack)
+    {
+        var films = [];
+        console.log(idElements);
+        for (const element of idElements.result)
+        {
+            ajaxGet('https://api.themoviedb.org/3/movie/'+element+'?api_key='+this.key+'&language=fr', function(response){
+                films.push(JSON.parse(response));});  
+        }
+        callBack(films);
+    }
+
     createView()//comment nommer cette fonction ?
     {
         console.log(document.getElementById("orderBy").className);
-        if(this.orderBy != "lastComment")
+        console.log(this.sortBy);
+        if(this.sortBy === "lastComment")
         {
-        this.ListRequest(this.sortBy, this.index, function(response){
+            console.log('coco');
+            ajaxGet('api/lastReviewsApi/'+this.index, function(response){
+                this.MovieByIdRequest(JSON.parse(response), function(response)
+                {
+                    console.log(response);
+                    var films = response;
+                    for (let i=0; i<20; i++)
+                    {
+                        this.View(i, films[i]);
+                        console.log('iteration');
+                    }
+                }.bind(this));}.bind(this));
+            }
+        
+        else
+        {
+            console.log('toto');
+            this.ListRequest(this.sortBy, this.index, function(response){
             var films = response.results;
             console.log(response);
             for (let i=0; i<20; i++)
@@ -45,11 +69,6 @@ class Overview
             }
         }.bind(this));            
         }
-        else
-        {
-            this.MovieRequest($id)
-        }
-
     }
 
     View(index, film)
@@ -71,25 +90,6 @@ class Overview
 
     }
 
-    OrderByDate()
-    {
-        this.index = 1;
-        this.sortBy = "release_date.desc";
-        this.createView();
-    }
-
-    OrderByLastReview() 
-    {
-        //requete ajax vers php pour demander quel sont les dernieres review
-    }
-
-    OrderByPopularity()
-    {
-        this.index = 1;
-        this.sortBy = "popularity.desc"
-        this.createView();
-    }
-
     searchFilm()
     {
         var title = document.getElementById("searchTitle").innerText;
@@ -102,5 +102,10 @@ class Overview
                 this.View(i, films[i]);
             }
         }.bind(this));
+    }
+
+    filmByLastReview()
+    {
+
     }
 }

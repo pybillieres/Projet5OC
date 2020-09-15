@@ -59,10 +59,9 @@ class User extends ObjectClass
 
     public function setAdmin($admin)
     {
-        if(is_bool($admin))
-        {
+
             $this->_admin = $admin;
-        }        
+      
     }
 
 }

@@ -32,7 +32,8 @@ class Session
             return $_SESSION[$name];
         }
         else {
-            throw new \Exception("attribut $name introuvable");
+           // throw new \Exception("attribut $name introuvable");
+           var_dump('toto');
         }
     }
 }
