@@ -32,7 +32,7 @@ class ReviewController extends Controller
         }
         if($page == 1)
         {
-        return $reviewsId;    
+            return $reviewsId;    
         }
         else
         {

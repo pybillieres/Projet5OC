@@ -11,6 +11,7 @@ class UserController extends SecureController
 
     public function UserHome()
     {
+        var_dump($this->CheckAdmin());
         $this->View('UserHome.twig');
     }
 

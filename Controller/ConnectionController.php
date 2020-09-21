@@ -60,6 +60,6 @@ class ConnectionController extends Controller
     function logout()
     {
         $this->request->getSession()->destroySession();
-        $this->connectionView();
+        $this->redirect('connection', 'connectionView');
     }
 }

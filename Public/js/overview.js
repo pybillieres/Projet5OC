@@ -39,8 +39,6 @@ class Overview
 
     createView()//comment nommer cette fonction ?
     {
-        console.log(document.getElementById("orderBy").className);
-        console.log(this.sortBy);
         if(this.sortBy === "lastComment")
         {
             console.log('coco');
@@ -52,7 +50,6 @@ class Overview
                     for (let i=0; i<20; i++)
                     {
                         this.View(i, films[i]);
-                        console.log('iteration');
                     }
                 }.bind(this));}.bind(this));
             }
