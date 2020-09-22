@@ -5,7 +5,17 @@ class Overview
         this.key = 'fd9a8abc18ee876e061e656506b72565';
         this.baseUrl = "http://image.tmdb.org/t/p/";
         this.index = document.getElementById("pageIndex").textContent;
-        this.sortBy = document.getElementById("orderBy").className;
+        this.sortBy;
+        this.Init();
+        
+    }
+
+    Init()
+    {
+       if(document.getElementById("orderBy") !== null )
+       {
+           this.sortBy = (document.getElementById("orderBy").className);
+       } 
     }
 
 
@@ -41,7 +51,6 @@ class Overview
     {
         if(this.sortBy === "lastComment")
         {
-            console.log('coco');
             ajaxGet('api/lastReviewsApi/'+this.index, function(response){
                 this.MovieByIdRequest(JSON.parse(response), function(response)
                 {
@@ -56,7 +65,7 @@ class Overview
         
         else
         {
-            console.log('toto');
+            console.log(this.sortBy);
             this.ListRequest(this.sortBy, this.index, function(response){
             var films = response.results;
             console.log(response);
@@ -81,7 +90,7 @@ class Overview
             var posterPath = "public/posterDefault.jpg";
         }
         
-        document.getElementById("poster" + [index]).src = posterPath; //penser a gerer le cas ou le posterPath n'est pas fourni (=>remplacer par image grise)
+        document.getElementById("poster" + [index]).src = posterPath;
         document.getElementById("title" + [index]).textContent = title;
         document.getElementById("movie" + [index]).href = "Movie/MovieDetails/" + id;
 
@@ -89,10 +98,12 @@ class Overview
 
     searchFilm()
     {
+        console.log('ici');
         var title = document.getElementById("searchTitle").innerText;
+        console.log(title);
         this.SearchRequest(title, this.index, function(response){
             var films = response.results;
-            console.log(response);
+            console.log(films);
             var nbrPages = response.total_pages;
             for (let i=0; i<20; i++)
             {

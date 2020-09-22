@@ -58,15 +58,18 @@ class MovieController extends Controller
     function Search()
     {
         $keyword = $this->request->Parameter('keyword');
+        var_dump($keyword);
         if($this->request->existParameter('id') && $this->request->Parameter('id')>0)
         {
         $page = $this->request->Parameter('id');   
+        var_dump($page);
         }
         else
         {
             $page = 1;
+            var_dump($page);
         }
-        $this->View('home.twig', ['keyword' => $keyword, 'page' => $page, 'action' => 'Search']);
+        $this->View('searchResults.twig', ['keyword' => $keyword, 'page' => $page, 'action' => 'Search']);
     }
 
     function movieDetails()

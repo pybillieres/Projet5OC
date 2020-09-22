@@ -25,7 +25,6 @@ abstract class Controller
 
   public function CheckAdmin()
   {
-    
     return ($this->request->getSession()->getAttribut("admin") == 1);
 
   }
@@ -35,13 +34,12 @@ abstract class Controller
   }
    
   public function View($template, $data = [])
-  {  var_dump($this->request->getSession());      
+  {  
     if($this->request->getSession()->existAttribut('login'))
     {
       $user = $this->request->getSession()->getAttribut('login');
       $data['user'] = $user ;
     }
-    var_dump($this->request->getSession()->existAttribut('login'));
     echo $this->twig->render($template, $data);
   }
 

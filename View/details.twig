@@ -19,20 +19,40 @@
       </div>
       <p>{{review.pseudo}}<br/>{{review.content}}<br/><a href="review/reportReview/{{review.id}}">signaler le commentaire</a></p>
     {% endfor %}
-              {% if user is null %}
-              <p> Vous devez être connecté pour laisser un avis <a href="Connection">Se connecter</a></p>
-            {% else %}
-                <a href='Review/newReview/{{idMovie}}'>Laisser un avis</a>
-            {% endif %}
 {% endif %}
 {% if reviews is null %}
       <p>Pas encore d'avis sur ce film</p>
-            {% if user is null %}
-              <p> Vous devez être connecté pour laisser un avis <a href="Connection">Se connecter</a></p>
-            {% else %}
-                <a href='Review/newReview/{{idMovie}}'>Laisser un avis</a>
-            {% endif %}
 {% endif %}
+
+
+{% if user != null %}
+<form method=post action='index.php'>
+  <div class="rating">
+    <input type="radio" id="star5" name="rating" value="5" checked/>
+    <label for="star5" title="text">5 stars</label>
+    <input type="radio" id="star4" name="rating" value="4" />
+    <label for="star4" title="text">4 stars</label>
+    <input type="radio" id="star3" name="rating" value="3" checked/>
+    <label for="star3" title="text">3 stars</label>
+    <input type="radio" id="star2" name="rating" value="2" />
+    <label for="star2" title="text">2 stars</label>
+    <input type="radio" id="star1" name="rating" value="1" />
+    <label for="star1" title="text">1 star</label>
+  </div>
+<label for='content'>Votre Avis</label>
+    <textarea name="content" rows="10" cols="200">
+    </textarea>
+    <input type='hidden' name='date'>
+    <input type="hidden" name='action' value='createReview'>
+    <input type="hidden" name='controller' value='review'>
+    <input type="hidden" name='idMovie' value={{idMovie}}>
+    <input type="submit" value="Valider" class="btn btn-primary mt-2">
+</form> 
+{% else %}
+<p> Vous devez être connecté pour laisser un avis <a href="Connection">Se connecter</a></p>
+{% endif %}
+
+
   <script src="public/js/details.js"></script>
   <script src="public/js/detailsMain.js"></script>
 

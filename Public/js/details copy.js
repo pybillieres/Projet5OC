@@ -4,6 +4,7 @@ class Details
     {
         this.key = 'fd9a8abc18ee876e061e656506b72565';
         this.baseUrl = "http://image.tmdb.org/t/p/";
+        this.getDetails();
     }
 
 
@@ -24,10 +25,10 @@ class Details
 
     getDetails()
     {
+        console.log('og');
         var id = this.selectById();
         this.request(id, function(response){
-            var film = response; 
-            console.log(film);
+            var film = response;
             var title = film.title;
             if(film.poster_path != null)
             {

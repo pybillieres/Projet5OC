@@ -61,13 +61,17 @@ class ReviewController extends Controller
     {
         if($this->checkSession())
         {
+            var_dump($this->request);
             var_dump($this->request->Parameter('rating'));
             $pseudo = $this->request->getSession()->getAttribut('login');
+            var_dump($pseudo);
             $content = $this->request->parameter('content');
             $date = date("Y-m-d H:i");
             $idMovie = $this->request->Parameter('idMovie');
             $rating = $this->request->Parameter('rating');
+            var_dump($rating);
             $data = ['pseudo' => $pseudo, 'content' => $content, 'date' => $date, 'idMovie' => $idMovie, 'rating' => $rating];
+            var_dump($data);
             $review = new Review($data);
             $manager = new ReviewManager;
             $manager->createReview($review);
@@ -75,9 +79,11 @@ class ReviewController extends Controller
         }
     }
 
-    function MyReviews()
+    function MyReviews($pseudo)
     {
-
+        $manager = new ReviewManager;
+        $reviews = $manager->getReviewByUser($pseudo);
+        return $reviews;
     }
 
     function reportReview()
@@ -91,5 +97,33 @@ class ReviewController extends Controller
             $this->View('report.twig', ['idMovie'=>$review->idMovie()]);
             //$this->redirect('movie', 'movieDetails', $review->idMovie());
 
+    }
+
+    function getReportedReviews()
+    {
+        if($this->CheckAdmin())
+        {
+            $manager = new ReviewManager;
+            $reviews = $manager->getReportedReviews();
+            $this->View('dashboard/reportedReviews.twig', ['reviews' => $reviews]);
+        }
+    }
+
+    function deleteReview()
+    {
+        $id = $this->request->Parameter('id');
+        $manager = new ReviewManager;
+        $review = $manager->getReviewById($id);
+        $review->setReported(0);
+        $manager->updateReview($review);
+    }
+
+    function validReview()
+    {
+        $id = $this->request->Parameter('id');
+        $manager = new ReviewManager;
+        $review = $manager->getReviewById($id);
+        $review->setReported(0);
+        $manager->updateReview($review);
     }
 }

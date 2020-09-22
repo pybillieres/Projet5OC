@@ -33,6 +33,21 @@ class ReviewManager extends Manager
         return $review;   
     }
 
+    function getReviewByUser($pseudo)
+    {
+        $req = $this->_db->prepare('SELECT * FROM reviews WHERE pseudo=? ORDER BY date DESC');
+        $req->execute(array($pseudo));
+        while($row = $req->fetch())
+        {
+            $review = new Review($row);
+            $reviews[] = $review;
+        }
+        if(isset($reviews))
+        {
+        return $reviews;
+        }   
+    }
+
     function getLastReviews()
     {
         $req = $this->_db->prepare('SELECT * FROM reviews ORDER BY date DESC LIMIT 0,20');
@@ -65,20 +80,8 @@ class ReviewManager extends Manager
 
     }
 
-    function updateReview(Review $review)
+    function updateReview(Review $review) //renommer cette fonction en reportREVIEW
     {
-
-        var_dump($review);
-        /*$req=$this->_db->prepare('UPDATE reviews SET idMovie=:idMovie, pseudo=:pseudo, content=:content, date=:date, rating=:rating reported=:reported WHERE id=:id');
-        $req->execute(array(
-                ':id'=>$review->id(),
-                ':idMovie'=>$review->idMovie(), 
-                ':pseudo'=>$review->pseudo(), 
-                ':content'=>$review->content(), 
-                ':date'=>$review->date(),
-                ':rating'=>$review->rating(),
-                ':reported'=>$review->reported()));
-*/
             var_dump($review->id(), $review->reported());
             $req=$this->_db->prepare('UPDATE reviews SET reported=:reported WHERE id=:id');
             $req->execute(array(
@@ -87,4 +90,26 @@ class ReviewManager extends Manager
             ));
     }
 
+    function getReportedReviews()
+    {
+        $req = $this->_db->prepare('SELECT * FROM reviews WHERE reported=1');
+        $req->execute();
+        while($row = $req->fetch())
+        {
+            $review = new Review($row);
+            $reviews[] = $review;
+        }     
+        if(isset($reviews))
+        {
+        return $reviews;
+        }  
+
+    }
+
+    function deleteReview($id)
+    {
+        $req = $this->_db->prepare('DELETE FROM reviews WHERE id=? ');
+        $req->execute(array($id));
+
+    }
 }

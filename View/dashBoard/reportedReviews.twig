@@ -1,0 +1,18 @@
+{% extends 'layout.twig' %}
+
+{% block head %}<title>Mon compte</title>{% endblock %}
+
+{% block content %}
+        {% for review in  reviews %}
+            <div class="col-12">
+              <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                  <p class="card-title text-center">{{review.pseudo}}<p>
+                  <p class="card-text">{{review.content}}</p>
+                      <a href='review/validReview/{{review.id}}' class="btn btn-secondary float-right">Conserver</a>
+                      <a  href='review/deleteReview/{{review.id}}' class="btn btn-secondary float-left">Supprimer</a>
+                </div>
+              </div>
+            </div>  
+        {% endfor %}
+{% endblock %}
