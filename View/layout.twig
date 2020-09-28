@@ -6,6 +6,7 @@
   <base href="/projet5/">
   <link rel="stylesheet" href="content/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="public/css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
 
@@ -34,10 +35,11 @@
             {% endif %}
           {% endblock %}
         </ul>
-        <form class="form-inline my-2 my-lg-0" action="" method='post'>
+        <form class="form-inline my-2 my-lg-0" action="index.php" method='post'>
             <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Search" id="searchKeyword" name="keyword">
             <input type="hidden" name='action' value='search'>
             <input type="hidden" name='controller' value='movie'>
+            <input type="hidden" name='id' value='1'>
             <input class="btn btn-outline-success my-2 my-sm-0" type="submit">
         </form>
       </div>

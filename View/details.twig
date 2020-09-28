@@ -3,14 +3,29 @@
 {% block head %}<title>{{movie.title}}</title>{% endblock %}
 
 {% block content %}
-    <img src="" id='poster'>
-    <h1 class='movie' id={{idMovie}}><span id='title'><span></h1>
-    <p>Date de sortie : <span id='releaseDate'></span></p>
-    <p>Genre : <span id='genres'></span></p>
+<div class="container">
+  <div class="row">
+    <div class="col-12 text-center">
+      <img src="" id='poster'>
+      <h1 class='movie' id={{idMovie}}><span id='title'><span></h1>
+      <p>Date de sortie : <span id='releaseDate'></span></p>
+      <p>Genre : <span id='genres'></span></p>
+      <p>Synopsis : <span id='overview'></span></p>
+      <p>moyenne des avis : {{averageRating}}</p>
+      </div>
+  </div>
+</div>
+    
 
 {% if reviews is defined %}
-    <h2>Derniers Avis</h2>
+    <h2>Avis</h2>
+            <div class="container">
+
+          <div class="row">
+            <div class="col-12">
     {% for review in reviews %}
+    <div class="card mb-4 box-shadow">
+    <p>Laissé par {{review.userLogin}} le {{review.date}}</p>
       <div class="rating">
         {% for i in 1..5 %}
           {% set starClass = (review.rating >= i ? "fas fa-star" : "far fa-star")  %}
@@ -18,7 +33,11 @@
           {% endfor %}
       </div>
       <p>{{review.pseudo}}<br/>{{review.content}}<br/><a href="review/reportReview/{{review.id}}">signaler le commentaire</a></p>
+    </div>
     {% endfor %}
+    </div>
+    </div>
+    </div>
 {% endif %}
 {% if reviews is null %}
       <p>Pas encore d'avis sur ce film</p>
@@ -40,8 +59,7 @@
     <label for="star1" title="text">1 star</label>
   </div>
 <label for='content'>Votre Avis</label>
-    <textarea name="content" rows="10" cols="200">
-    </textarea>
+    <textarea name="content" rows="10" cols="200"></textarea>
     <input type='hidden' name='date'>
     <input type="hidden" name='action' value='createReview'>
     <input type="hidden" name='controller' value='review'>

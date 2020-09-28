@@ -1,4 +1,5 @@
 <?php
+
 namespace Model;
 
 use Framework\Manager;
@@ -11,54 +12,47 @@ class ReviewManager extends Manager
     {
         $req = $this->_db->prepare('SELECT * FROM reviews WHERE idMovie=? ORDER BY date DESC');
         $req->execute(array($id));
-        while($row = $req->fetch())
-        {
+        while ($row = $req->fetch()) {
             $review = new Review($row);
             $reviews[] = $review;
         }
-        if(isset($reviews))
-        {
-        return $reviews;
-        }      
-        
+        if (isset($reviews)) {
+            return $reviews;
+        }
     }
 
     function getReviewById($id)
     {
         $req = $this->_db->prepare('SELECT * FROM reviews WHERE id=?');
         $req->execute(array($id));
-        $row= $req->fetch();
+        $row = $req->fetch();
         $review = new Review($row);
         var_dump($review);
-        return $review;   
+        return $review;
     }
 
-    function getReviewByUser($pseudo)
+    function getReviewByUser($userId)
     {
-        $req = $this->_db->prepare('SELECT * FROM reviews WHERE pseudo=? ORDER BY date DESC');
-        $req->execute(array($pseudo));
-        while($row = $req->fetch())
-        {
+        $req = $this->_db->prepare('SELECT * FROM reviews WHERE userId=? ORDER BY date DESC');
+        $req->execute(array($userId));
+        while ($row = $req->fetch()) {
             $review = new Review($row);
             $reviews[] = $review;
         }
-        if(isset($reviews))
-        {
-        return $reviews;
-        }   
+        if (isset($reviews)) {
+            return $reviews;
+        }
     }
 
     function getLastReviews()
     {
         $req = $this->_db->prepare('SELECT * FROM reviews ORDER BY date DESC LIMIT 0,20');
         $req->execute();
-        while($row = $req->fetch())
-        {
+        while ($row = $req->fetch()) {
             $review = new Review($row);
             $reviews[] = $review;
-        }        
+        }
         return $reviews;
-
     }
 
     function existReview($id)
@@ -70,46 +64,43 @@ class ReviewManager extends Manager
 
     function createReview(Review $review)
     {
-            $req = $this->_db->prepare('INSERT INTO reviews(idMovie, pseudo, content, date, rating) VALUES(:idMovie, :pseudo, :content, :date, :rating) ');
-            $req->execute(array (
-                ':idMovie'=>$review->idMovie(), 
-                ':pseudo'=>$review->pseudo(), 
-                ':content'=>$review->content(), 
-                ':date'=>$review->date(),
-                ':rating'=>$review->rating()));
-
+        $req = $this->_db->prepare('INSERT INTO reviews(idMovie, userId, userLogin, content, date, rating) VALUES(:idMovie, :userId, :userLogin, :content, :date, :rating) ');
+        $req->execute(array(
+            ':idMovie' => $review->idMovie(),
+            ':userId' => $review->userId(),
+            ':userLogin' => $review->userLogin(),
+            ':content' => $review->content(),
+            ':date' => $review->date(),
+            ':rating' => $review->rating()
+        ));
     }
 
     function updateReview(Review $review) //renommer cette fonction en reportREVIEW
     {
-            var_dump($review->id(), $review->reported());
-            $req=$this->_db->prepare('UPDATE reviews SET reported=:reported WHERE id=:id');
-            $req->execute(array(
-                ':id'=>$review->id(),
-                ':reported'=>$review->reported()
-            ));
+        var_dump($review->id(), $review->reported());
+        $req = $this->_db->prepare('UPDATE reviews SET reported=:reported WHERE id=:id');
+        $req->execute(array(
+            ':id' => $review->id(),
+            ':reported' => $review->reported()
+        ));
     }
 
     function getReportedReviews()
     {
         $req = $this->_db->prepare('SELECT * FROM reviews WHERE reported=1');
         $req->execute();
-        while($row = $req->fetch())
-        {
+        while ($row = $req->fetch()) {
             $review = new Review($row);
             $reviews[] = $review;
-        }     
-        if(isset($reviews))
-        {
-        return $reviews;
-        }  
-
+        }
+        if (isset($reviews)) {
+            return $reviews;
+        }
     }
 
     function deleteReview($id)
     {
         $req = $this->_db->prepare('DELETE FROM reviews WHERE id=? ');
         $req->execute(array($id));
-
     }
 }

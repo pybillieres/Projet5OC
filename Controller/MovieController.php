@@ -3,6 +3,7 @@ namespace Controller;
 
 use Framework\Controller;
 use Controller\ReviewController;
+use Model\Review;
 
 class MovieController extends Controller
 {
@@ -79,11 +80,17 @@ class MovieController extends Controller
             $reviews = $reviewController->getReviews($id);
             if($reviews !== null)
             {
-                $this->View('details.twig', ['reviews' => $reviews, "idMovie"=>$id]);  
+                for ($i=0; $i<count($reviews); $i++)
+                {
+                    $ratings[] = $reviews[$i]->rating();
+                }
+                $average = bcdiv((array_sum($ratings)/count($ratings)), 1, 2);
+                $user = $this->request->getSession()->getAttribut('userId');
+                $this->View('details.twig', ['reviews' => $reviews, "idMovie"=>$id, "averageRating" => $average]);  
             }
             else
             {
-                $this->View('details.twig', ["idMovie"=>$id]);
+                $this->View('details.twig', ["idMovie"=>$id, "averageRating" => '-']);
             }
     }
 

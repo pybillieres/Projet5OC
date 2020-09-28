@@ -34,26 +34,6 @@ class ApiController extends Controller
         
     }
 
-    function lastMovies()
-    {
-        $controller = new MovieController;
-        $movies = $controller->lastReviewsApi($page);
-        foreach ($movies as $movie)
-        {
-            $data['id'] = $movie->id();
-            $data['idDb'] = $movie->idDb();
-            $data['title'] = $movie->title();
-            $datas[] = $data;
-        }    
-        $this->reponse_json($datas);
-    }
-
-    function MovieByName($name)
-    {
-
-    }
-
-
     function reponse_json($data) { //penser a ajouter variable sucess true or false
 
         $array['result'] = $data;

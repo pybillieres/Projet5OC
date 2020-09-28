@@ -1,75 +1,78 @@
-class Details
-{
-    constructor()
-    {
+class Details {
+    constructor() {
         this.key = 'fd9a8abc18ee876e061e656506b72565';
         this.baseUrl = "http://image.tmdb.org/t/p/";
     }
 
 
-    selectById()
-    {
+    selectById() {
         var movieId = document.getElementsByClassName("movie");
         return movieId[0].id;
-    
+
     }
 
-    request(id, callBack)
-    {
+    request(id, callBack) {
         var film;
-        ajaxGet('https://api.themoviedb.org/3/movie/'+id+'?api_key='+this.key+'&language=fr', function(response){
-            film = JSON.parse(response);}.bind(this));  
+        ajaxGet('https://api.themoviedb.org/3/movie/' + id + '?api_key=' + this.key + '&language=fr', function (response) {
+            film = JSON.parse(response);
+        }.bind(this));
         callBack(film);
     }
 
-    getDetails()
-    {
+    getDetails() {
         var id = this.selectById();
-        this.request(id, function(response){
-            var film = response; 
+        this.request(id, function (response) {
+            var film = response;
             console.log(film);
             var title = film.title;
-            if(film.poster_path != null)
-            {
-                var posterPath = this.baseUrl + "w92" + film.poster_path; //revoir dimensions du poster
+            if (film.poster_path != null) {
+                var posterPath = this.baseUrl + "w342" + film.poster_path; //revoir dimensions du poster
             }
-            else
-            {
-                var posterPath = "public/posterDefault.jpg";
+            else {
+                var posterPath = "public/posterDefaultW342.jpg";
             }
             var releaseDate = film.release_date;
             var genres = film.genres;//voir si moyen de simplifier conversion array string pour les genres
+            var overview = film.overview;
             var genresString = "";
             for (var i = 0; i < genres.length; i++) {
                 var genre = genres[i].name;
-                if(i < genres.length - 1)
-                {
-                    genresString = genresString + genre + ', ';    
+                if (i < genres.length - 1) {
+                    genresString = genresString + genre + ', ';
                 }
-                else
-                {
-                    genresString = genresString + genre;  
+                else {
+                    genresString = genresString + genre;
                 }
-              }
+            }
             document.getElementById("title").textContent = title;
-
             document.getElementById("poster").src = posterPath;
             document.getElementById("releaseDate").textContent = releaseDate;
-            document.getElementById("genres").textContent = genresString;
-            }.bind(this));
-    
-    
+            if (genresString != "") {
+                document.getElementById("genres").textContent = genresString;
+            }
+            else {
+                document.getElementById("genres").textContent = "-";
+            }
+            if (overview != "") {
+                document.getElementById("overview").textContent = overview;
+            }
+            else {
+                document.getElementById("overview").textContent = "-";
+            }
+
+
+        }.bind(this));
+
+
     }
 
-    getTitles()
-    {
+    getTitles() {
         var movieId = document.getElementsByClassName("movie");
         var id;
         console.log(movieId[0].id);
-        for (let i=0; i<=movieId.length-1; i++)
-        {   
-            id=movieId[i].id
-            this.request(id, function(response){
+        for (let i = 0; i <= movieId.length - 1; i++) {
+            id = movieId[i].id
+            this.request(id, function (response) {
                 var title = response.title;
                 document.getElementById(response.id).textContent = title;
             });

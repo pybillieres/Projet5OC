@@ -36,6 +36,7 @@ class ReviewController extends Controller
         }
         else
         {
+            var_dump('toto');
             $to = $page-1*20;
             $from = $page*20-1;
             return array_slice($reviewsId, $to, $from);
@@ -61,17 +62,13 @@ class ReviewController extends Controller
     {
         if($this->checkSession())
         {
-            var_dump($this->request);
-            var_dump($this->request->Parameter('rating'));
-            $pseudo = $this->request->getSession()->getAttribut('login');
-            var_dump($pseudo);
+            $userId = $this->request->getSession()->getAttribut('userId');
+            $userLogin = $this->request->getSession()->getAttribut('login');
             $content = $this->request->parameter('content');
             $date = date("Y-m-d H:i");
             $idMovie = $this->request->Parameter('idMovie');
             $rating = $this->request->Parameter('rating');
-            var_dump($rating);
-            $data = ['pseudo' => $pseudo, 'content' => $content, 'date' => $date, 'idMovie' => $idMovie, 'rating' => $rating];
-            var_dump($data);
+            $data = ['userId' => $userId, 'userLogin' => $userLogin, 'content' => $content, 'date' => $date, 'idMovie' => $idMovie, 'rating' => $rating];
             $review = new Review($data);
             $manager = new ReviewManager;
             $manager->createReview($review);
@@ -79,10 +76,10 @@ class ReviewController extends Controller
         }
     }
 
-    function MyReviews($pseudo)
+    function MyReviews($userId)
     {
         $manager = new ReviewManager;
-        $reviews = $manager->getReviewByUser($pseudo);
+        $reviews = $manager->getReviewByUser($userId);
         return $reviews;
     }
 

@@ -29,7 +29,7 @@ class UserController extends SecureController
     function getMyReviews()
     {
         $controller = new ReviewController;
-        $reviews = $controller->myReviews($this->request->getSession()->getAttribut('login'));
+        $reviews = $controller->myReviews($this->request->getSession()->getAttribut('userId'));
         return $reviews;
     }
 
@@ -69,7 +69,6 @@ class UserController extends SecureController
             }
             else
             {
-                $this->errorMsg('Les deux mots de passe sont différents');
             }
         }
     }

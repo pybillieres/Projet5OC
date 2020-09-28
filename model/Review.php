@@ -7,7 +7,7 @@ class Review extends ObjectClass
 {
     private $_id,
             $_idMovie,
-            $_pseudo,
+            $_userId,
             $_date,
             $_rating,
             $_content,
@@ -23,9 +23,14 @@ class Review extends ObjectClass
         return $this->_idMovie;
     }
 
-    public function pseudo()
+    public function userId()
     {
-        return $this->_pseudo;
+        return $this->_userId;
+    }
+
+    public function userLogin()
+    {
+        return $this->_userLogin;
     }
 
     public function date()
@@ -58,9 +63,14 @@ class Review extends ObjectClass
         $this->_idMovie = $idMovie;
     }
 
-    public function setPseudo($pseudo)
+    public function setUserId($userId)
     {
-        $this->_pseudo = $pseudo;
+        $this->_userId = $userId;
+    }
+
+    public function setUserLogin($userLogin)
+    {
+        $this->_userLogin = $userLogin;
     }
 
     public function setDate($date)
