@@ -3,6 +3,7 @@
 {% block head %}<title>Mon compte</title>{% endblock %}
 
 {% block content %}
+  {% if reviews != null %}
         {% for review in  reviews %}
             <div class="col-12">
               <div class="card mb-4 box-shadow">
@@ -15,4 +16,7 @@
               </div>
             </div>  
         {% endfor %}
+  {% else %}
+    <p>Pas de commentaires signalés pour le moment</p>
+  {% endif %}
 {% endblock %}

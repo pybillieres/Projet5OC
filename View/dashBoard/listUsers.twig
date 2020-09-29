@@ -1,6 +1,6 @@
 {% extends 'layout.twig' %}
 
-{% block head %}<title>Mon compte</title>{% endblock %}
+{% block head %}<title>Liste des utilisateurs</title>{% endblock %}
 
 {% block content %}
 
@@ -10,27 +10,26 @@
             <div class="col-md-12">
               <div class="card mb-4 box-shadow">
                 <div class="card-body">
-                  <p class="card-title text-center">Mes derniers avis<p>
+                  <p class="card-title text-center">Utilisateurs<p>
                   <table class='table'>
                     <thead>
                       <tr>
-                      <th scope='col'>Titre du film</th>
-                      <th scope='col'>Date</th>
-                      <th scope='col'>Note</th>
-                      <th scope='col'>Contenu</th>
+                      <th scope='col'>login</th>
+                      <th scope='col'>Administrateur</th>
+                      <th scope='col'></th>
                       </tr>
                     </thead>
                     <tbody>
-                      {% for review in reviews %}
+                      {% for user in users %}
                       
                         <tr>
-                        <td id={{review.idMovie}} class='movie'></td>
-                        <td>{{review.date}}</td>
-                        <td>{% for i in 1..5 %}
-                              {% set starClass = (review.rating >= i ? "fas fa-star" : "far fa-star")  %}
-                              <i class="{{ starClass }}"></i>
-                              {% endfor %}</td>
-                        <td><a href='review/modifyReview/{{review.id}}'>{{review.content | slice(0, 30)}}</a></td>
+                        <td  >{{user.login}}</td>
+                        {% if user.admin == 1 %}
+                        <td>oui</td>
+                        {% else %}
+                        <td>non</td>
+                        {% endif %}
+                        <td><a href=''>Voir détails</></td>
                         </tr>
                       {% endfor %}
                     </tbody>

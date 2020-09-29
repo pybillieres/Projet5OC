@@ -78,19 +78,35 @@ class MovieController extends Controller
             $id = $this->request->Parameter('id');
             $reviewController = new ReviewController;
             $reviews = $reviewController->getReviews($id);
+
             if($reviews !== null)
             {
+                $CommentAllowed = true;
+                if($this->checksession())
+                {
+                    foreach($reviews as $review)
+                    {
+                        $checkUser[] = $review->userId();
+                    }
+                    if(in_array($this->request->getSession()->getAttribut('userId'), $checkUser))
+                    {
+                        $CommentAllowed = false;
+                    }
+                }
                 for ($i=0; $i<count($reviews); $i++)
                 {
                     $ratings[] = $reviews[$i]->rating();
                 }
                 $average = bcdiv((array_sum($ratings)/count($ratings)), 1, 2);
                 $user = $this->request->getSession()->getAttribut('userId');
-                $this->View('details.twig', ['reviews' => $reviews, "idMovie"=>$id, "averageRating" => $average]);  
+                var_dump($CommentAllowed);
+                $this->View('details.twig', ['reviews' => $reviews, "idMovie"=>$id, "averageRating" => $average, 'commentAllowed' => $CommentAllowed]);  
+
             }
             else
             {
-                $this->View('details.twig', ["idMovie"=>$id, "averageRating" => '-']);
+                $CommentAllowed = true;
+                $this->View('details.twig', ["idMovie"=>$id, "averageRating" => '-', 'commentAllowed' => $CommentAllowed]);
             }
     }
 

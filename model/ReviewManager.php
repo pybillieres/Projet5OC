@@ -77,7 +77,6 @@ class ReviewManager extends Manager
 
     function updateReview(Review $review) //renommer cette fonction en reportREVIEW
     {
-        var_dump($review->id(), $review->reported());
         $req = $this->_db->prepare('UPDATE reviews SET reported=:reported WHERE id=:id');
         $req->execute(array(
             ':id' => $review->id(),

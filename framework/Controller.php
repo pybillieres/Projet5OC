@@ -35,6 +35,8 @@ abstract class Controller
    
   public function View($template, $data = [])
   {  
+    $racineWeb = Configuration::get("racineWeb", "/");
+    $data['racineWeb'] = $racineWeb;
     if($this->request->getSession()->existAttribut('login'))
     {
       $user = $this->request->getSession()->getAttribut('login');

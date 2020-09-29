@@ -36,4 +36,15 @@ class UserManager extends Manager
                             ':id'=>$user->id()));
     }
 
+    public function getAllUsers()
+    {
+        $req = $this->_db->prepare('SELECT * FROM users ORDER BY login');
+        $req->execute();
+        while ($row = $req->fetch()) {
+            $user = new User($row);
+            $users[] = $user;
+        }
+            return $users;
+    }
+
 }

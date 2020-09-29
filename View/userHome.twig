@@ -33,7 +33,7 @@
                   <p class="card-text"></p>
                   <div class="row">
                   <div class='col-lg-6 text-center'><a href='review/getReportedReviews'>-Commentaires signalés</a></div>
-                  <div class='col-lg-6 text-center'><a href='user/listUsers'>-Gérer les utilisateurs</a></div>
+                  <div class='col-lg-6 text-center'><a href='user/changePassword'>-Gérer les utilisateurs</a></div>
                   <div class="d-flex justify-content-between align-items-center">
                   </div>
                   </div>
@@ -50,7 +50,6 @@
                       <tr>
                       <th scope='col'>Titre du film</th>
                       <th scope='col'>Date</th>
-                      <th scope='col'>Note</th>
                       <th scope='col'>Contenu</th>
                       </tr>
                     </thead>
@@ -59,11 +58,7 @@
                         <tr>
                         <td id={{review.idMovie}} class='movie'></td>
                         <td>{{review.date}}</td>
-                        <td>{% for i in 1..5 %}
-                              {% set starClass = (review.rating >= i ? "fas fa-star" : "far fa-star")  %}
-                              <i class="{{ starClass }}"></i>
-                              {% endfor %}</td>
-                        <td>{{review.content | slice(0, 30)}}</td>
+                        <td>{{review.content}}</td>
                         </tr>
                       {% endfor %}
                     </tbody>

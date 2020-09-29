@@ -113,6 +113,7 @@ class ReviewController extends Controller
         $review = $manager->getReviewById($id);
         $review->setReported(0);
         $manager->updateReview($review);
+        $this->redirect('Review', 'getReportedReviews');
     }
 
     function validReview()
@@ -122,5 +123,17 @@ class ReviewController extends Controller
         $review = $manager->getReviewById($id);
         $review->setReported(0);
         $manager->updateReview($review);
+        $this->redirect('Review', 'getReportedReviews');
+    }
+
+    function modifyReview()//ajouter checkuser
+    {
+        $id = $this->request->Parameter('id');
+        $manager=new ReviewManager;
+        $review = $manager->getReviewById($id);
+        $i = $review->rating();
+        $rating[$i] = 'checked';
+        var_dump($rating);
+        $this->View('dashboard/modifyReview.twig', ['review'=>$review, 'rating'=>$rating]);
     }
 }

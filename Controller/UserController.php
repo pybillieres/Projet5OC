@@ -1,6 +1,7 @@
 <?php
 namespace Controller;
 use Framework\SecureController;
+use Model\Review;
 use Model\UserManager;
 
 class UserController extends SecureController
@@ -15,13 +16,20 @@ class UserController extends SecureController
         if($this->CheckAdmin())
         {
             $reviews = $this->getMyReviews();
-            $reviews = array_slice($reviews, 0, 5);
+            if($reviews != null)
+            {
+            $reviews = array_slice($reviews, 0, 5);                
+            }
             $this->View('dashBoard/UserHome.twig',['reviews' => $reviews, 'admin' => true]);
         }
         else
         {
             $reviews = $this->getMyReviews();
-            $reviews = array_slice($reviews, 0, 5);
+            if($reviews != null)
+            {
+            $reviews = array_slice($reviews, 0, 5);                
+            }
+
             $this->View('dashBoard/UserHome.twig',['reviews' => $reviews]);
         }
     }
@@ -41,7 +49,9 @@ class UserController extends SecureController
 
     public function myAccount()
     {
-        $this->View('dashBoard/myAccount.twig');
+        $login=$this->request->getSession()->getAttribut('login');
+        $nbrReviews = count($this->getMyReviews());
+        $this->View('dashBoard/myAccount.twig', ['pseudo' => $login, 'nbrReviews' => $nbrReviews]);
     }
 
     function changePassword()
@@ -71,6 +81,14 @@ class UserController extends SecureController
             {
             }
         }
+    }
+
+    function listUsers()
+    {
+        $manager = new UserManager;
+        $users = $manager->getAllUsers();
+        $this->View('dashboard/listUsers.twig', ['users'=>$users]);
+
     }
 
 
