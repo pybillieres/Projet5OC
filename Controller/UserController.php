@@ -1,5 +1,7 @@
 <?php
+
 namespace Controller;
+
 use Framework\SecureController;
 use Model\Review;
 use Model\UserManager;
@@ -13,24 +15,19 @@ class UserController extends SecureController
 
     public function UserHome()
     {
-        if($this->CheckAdmin())
-        {
+        if ($this->CheckAdmin()) {
             $reviews = $this->getMyReviews();
-            if($reviews != null)
-            {
-            $reviews = array_slice($reviews, 0, 5);                
+            if ($reviews != null) {
+                $reviews = array_slice($reviews, 0, 5);
             }
-            $this->View('dashBoard/UserHome.twig',['reviews' => $reviews, 'admin' => true]);
-        }
-        else
-        {
+            $this->View('dashBoard/UserHome.twig', ['reviews' => $reviews, 'admin' => true]);
+        } else {
             $reviews = $this->getMyReviews();
-            if($reviews != null)
-            {
-            $reviews = array_slice($reviews, 0, 5);                
+            if ($reviews != null) {
+                $reviews = array_slice($reviews, 0, 5);
             }
 
-            $this->View('dashBoard/UserHome.twig',['reviews' => $reviews]);
+            $this->View('dashBoard/UserHome.twig', ['reviews' => $reviews]);
         }
     }
 
@@ -49,7 +46,7 @@ class UserController extends SecureController
 
     public function myAccount()
     {
-        $login=$this->request->getSession()->getAttribut('login');
+        $login = $this->request->getSession()->getAttribut('login');
         $nbrReviews = count($this->getMyReviews());
         $this->View('dashBoard/myAccount.twig', ['pseudo' => $login, 'nbrReviews' => $nbrReviews]);
     }
@@ -61,24 +58,18 @@ class UserController extends SecureController
 
     function confirmPassword()
     {
-        if($this->checkSession())
-        {
+        if ($this->checkSession()) {
 
             $newPassword = $this->request->Parameter('password');
-            $newPasswordConfirm= $this->request->Parameter('passwordConfirm');
-            var_dump($newPassword);
-            if($newPassword == $newPasswordConfirm)
-            {
-                $userId=$this->request->getSession()->getAttribut('userId');
+            $newPasswordConfirm = $this->request->Parameter('passwordConfirm');
+            if ($newPassword == $newPasswordConfirm) {
+                $userId = $this->request->getSession()->getAttribut('userId');
                 $userManager = new UserManager;
                 $user = $userManager->getUserById($userId);
                 $user->setPassword(md5($newPassword));
                 $userManager->modifyPassword($user);
                 $this->redirect('user');
-
-            }
-            else
-            {
+            } else {
             }
         }
     }
@@ -87,10 +78,6 @@ class UserController extends SecureController
     {
         $manager = new UserManager;
         $users = $manager->getAllUsers();
-        $this->View('dashboard/listUsers.twig', ['users'=>$users]);
-
+        $this->View('dashboard/listUsers.twig', ['users' => $users]);
     }
-
-
-
 }

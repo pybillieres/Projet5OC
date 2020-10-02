@@ -1,5 +1,7 @@
 <?php
+
 namespace Framework;
+
 use Framework\Controller;
 
 abstract class SecureController extends Controller
@@ -9,11 +11,8 @@ abstract class SecureController extends Controller
     {
         if ($this->request->getSession()->existAttribut("userId")) {
             parent::executeAction($action);
-        }
-        else {
+        } else {
             $this->redirect('connection');
         }
     }
-
 }
-

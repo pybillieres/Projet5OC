@@ -1,4 +1,5 @@
 <?php
+
 namespace Model;
 
 use Framework\ObjectClass;
@@ -6,12 +7,12 @@ use Framework\ObjectClass;
 class Review extends ObjectClass
 {
     private $_id,
-            $_idMovie,
-            $_userId,
-            $_date,
-            $_rating,
-            $_content,
-            $_reported;
+        $_idMovie,
+        $_userId,
+        $_date,
+        $_rating,
+        $_content,
+        $_reported;
 
     public function id()
     {

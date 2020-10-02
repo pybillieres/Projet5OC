@@ -1,4 +1,5 @@
 <?php
+
 namespace Controller;
 
 use Framework\Controller;
@@ -16,52 +17,40 @@ class ReviewController extends Controller
         return $reviews;
     }
 
-    function lastReviewsId($page = 1)
+    function lastReviewsId($page = 1) // revoir cette fonction ->doute
     {
         $manager = new ReviewManager;
         $reviews = $manager->getLastReviews();
-        foreach($reviews as $review)
-        {
-            $id=$review->idMovie();
+        foreach ($reviews as $review) {
+            $id = $review->idMovie();
             $reviewsId[] = $id;
             $reviewsId = array_unique($reviewsId);
-            if(count($reviewsId) >= 20*$page)
-            {
-            break;
+            if (count($reviewsId) >= 20 * $page) {
+                break;
             }
         }
-        if($page == 1)
-        {
-            return $reviewsId;    
-        }
-        else
-        {
-            var_dump('toto');
-            $to = $page-1*20;
-            $from = $page*20-1;
+        if ($page == 1) {
+            return $reviewsId;
+        } else {
+            $to = $page - 1 * 20;
+            $from = $page * 20 - 1;
             return array_slice($reviewsId, $to, $from);
         }
-        
     }
 
     function newReview()
     {
-        if($this->checkSession())
-        {
+        if ($this->checkSession()) {
             $id = $this->request->Parameter('id');
-            echo $this->twig->render('newReview.twig', ['id' => $id]);            
-        }
-        else
-        {
+            echo $this->twig->render('newReview.twig', ['id' => $id]);
+        } else {
             $this->redirect('connection');
         }
-
     }
 
     function createReview()
     {
-        if($this->checkSession())
-        {
+        if ($this->checkSession()) {
             $userId = $this->request->getSession()->getAttribut('userId');
             $userLogin = $this->request->getSession()->getAttribut('login');
             $content = $this->request->parameter('content');
@@ -85,28 +74,32 @@ class ReviewController extends Controller
 
     function reportReview()
     {
-
-            $id = $this->request->Parameter('id');
-            $reviewManager = new ReviewManager;
-            $review = $reviewManager->getReviewById($id);
-            $review->setReported(1);
-            $reviewManager->updateReview($review);
-            $this->View('report.twig', ['idMovie'=>$review->idMovie()]);
-            //$this->redirect('movie', 'movieDetails', $review->idMovie());
-
+        $id = $this->request->Parameter('id');
+        $reviewManager = new ReviewManager;
+        $review = $reviewManager->getReviewById($id);
+        $review->setReported(1);
+        $reviewManager->reportReview($review);
+        $this->View('report.twig', ['idMovie' => $review->idMovie()]);
     }
 
     function getReportedReviews()
     {
-        if($this->CheckAdmin())
-        {
+        if ($this->CheckAdmin()) {
             $manager = new ReviewManager;
             $reviews = $manager->getReportedReviews();
             $this->View('dashboard/reportedReviews.twig', ['reviews' => $reviews]);
         }
     }
 
-    function deleteReview()
+    function deleteReviewAdmin() //proteger, permet de supprimer n'importe quel review (sert pour moderer les commentaires)
+    {
+    }
+
+    function deleteReviewUser() //permet de supprimer seulement ses propres reviews
+    {
+    }
+
+    function validReview() //ajouter checkadmin
     {
         $id = $this->request->Parameter('id');
         $manager = new ReviewManager;
@@ -116,24 +109,29 @@ class ReviewController extends Controller
         $this->redirect('Review', 'getReportedReviews');
     }
 
-    function validReview()
+    function modifyReview() //ajouter checkuser et que c'est le bon user qui modifie le commentaire
     {
         $id = $this->request->Parameter('id');
         $manager = new ReviewManager;
-        $review = $manager->getReviewById($id);
-        $review->setReported(0);
-        $manager->updateReview($review);
-        $this->redirect('Review', 'getReportedReviews');
-    }
-
-    function modifyReview()//ajouter checkuser
-    {
-        $id = $this->request->Parameter('id');
-        $manager=new ReviewManager;
         $review = $manager->getReviewById($id);
         $i = $review->rating();
         $rating[$i] = 'checked';
-        var_dump($rating);
-        $this->View('dashboard/modifyReview.twig', ['review'=>$review, 'rating'=>$rating]);
+        $this->View('dashboard/modifyReview.twig', ['review' => $review, 'rating' => $rating]);
+    }
+
+    function sendModifyReview() //ajouter checkuser ET que c'est le bon user qui modifie le commentaire
+    {
+        $id = $this->request->Parameter('id');
+        $content = $this->request->Parameter('content');
+        $rating = $this->request->Parameter('rating');
+        $manager = new ReviewManager;
+        $review = $manager->getReviewById($id);
+
+        if ($review->userId() == $this->request->getSession()->getAttribut('userId')) {
+            $review->setContent($content);
+            $review->setRating($rating);
+            $manager->updateReview($review);
+            $this->redirect('user', 'myReviews');
+        }
     }
 }

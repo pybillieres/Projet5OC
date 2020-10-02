@@ -1,6 +1,7 @@
 <?php
 
 namespace Framework;
+
 use Framework\Configuration;
 
 abstract class Manager
@@ -14,19 +15,16 @@ abstract class Manager
 
     public function setDb()
     {
-        try
-        {
+        try {
 
-        $dsn = Configuration::get("dsn");
-        $login = Configuration::get("login");
-        $password = Configuration::get("password");
-        $db = new \PDO($dsn, $login, $password);
-        $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        $this->_db = $db;
+            $dsn = Configuration::get("dsn");
+            $login = Configuration::get("login");
+            $password = Configuration::get("password");
+            $db = new \PDO($dsn, $login, $password);
+            $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            $this->_db = $db;
+        } catch (\PDOException $e) {
+            die('Erreur : ' . $e->getCode());
         }
-        catch (\PDOException $e)
-        {
-                die('Erreur : ' . $e->getCode());
-        }
-}
+    }
 }

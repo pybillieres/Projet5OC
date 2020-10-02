@@ -1,4 +1,5 @@
 <?php
+
 namespace Controller;
 
 use Framework\Controller;
@@ -15,12 +16,9 @@ class MovieController extends Controller
 
     function lastMovies()
     {
-        if($this->request->existParameter('id') && $this->request->Parameter('id')>0)
-        {
-        $page = $this->request->Parameter('id');   
-        }
-        else
-        {
+        if ($this->request->existParameter('id') && $this->request->Parameter('id') > 0) {
+            $page = $this->request->Parameter('id');
+        } else {
             $page = 1;
         }
         $orderBy = ['label' => 'Le plus récent', 'parameter' => 'release_date.desc', 'action' => 'lastMovies'];
@@ -29,27 +27,20 @@ class MovieController extends Controller
 
     function orderByReviews()
     {
-        if($this->request->existParameter('id') && $this->request->Parameter('id')>0)
-        {
-        $page = $this->request->Parameter('id');   
-        }
-        else
-        {
+        if ($this->request->existParameter('id') && $this->request->Parameter('id') > 0) {
+            $page = $this->request->Parameter('id');
+        } else {
             $page = 1;
         }
         $orderBy = ['label' => 'Avis le plus récent', 'parameter' => 'lastComment'];
         $this->View('home.twig', ['page' => $page, 'orderBy' => $orderBy]);
-
     }
 
     function orderByPopularity()
     {
-        if($this->request->existParameter('id') && $this->request->Parameter('id')>0)
-        {
-        $page = $this->request->Parameter('id');   
-        }
-        else
-        {
+        if ($this->request->existParameter('id') && $this->request->Parameter('id') > 0) {
+            $page = $this->request->Parameter('id');
+        } else {
             $page = 1;
         }
         $orderBy = ['label' => 'Le plus populaire', 'parameter' => 'popularity.desc', 'action' => 'orderByPopularity'];
@@ -59,56 +50,38 @@ class MovieController extends Controller
     function Search()
     {
         $keyword = $this->request->Parameter('keyword');
-        var_dump($keyword);
-        if($this->request->existParameter('id') && $this->request->Parameter('id')>0)
-        {
-        $page = $this->request->Parameter('id');   
-        var_dump($page);
-        }
-        else
-        {
+        if ($this->request->existParameter('id') && $this->request->Parameter('id') > 0) {
+            $page = $this->request->Parameter('id');
+        } else {
             $page = 1;
-            var_dump($page);
         }
         $this->View('searchResults.twig', ['keyword' => $keyword, 'page' => $page, 'action' => 'Search']);
     }
 
     function movieDetails()
     {
-            $id = $this->request->Parameter('id');
-            $reviewController = new ReviewController;
-            $reviews = $reviewController->getReviews($id);
+        $id = $this->request->Parameter('id');
+        $reviewController = new ReviewController;
+        $reviews = $reviewController->getReviews($id);
 
-            if($reviews !== null)
-            {
-                $CommentAllowed = true;
-                if($this->checksession())
-                {
-                    foreach($reviews as $review)
-                    {
-                        $checkUser[] = $review->userId();
-                    }
-                    if(in_array($this->request->getSession()->getAttribut('userId'), $checkUser))
-                    {
-                        $CommentAllowed = false;
-                    }
+        if ($reviews !== null) {
+            $CommentAllowed = true;
+            if ($this->checksession()) {
+                foreach ($reviews as $review) {
+                    $checkUser[] = $review->userId();
                 }
-                for ($i=0; $i<count($reviews); $i++)
-                {
-                    $ratings[] = $reviews[$i]->rating();
+                if (in_array($this->request->getSession()->getAttribut('userId'), $checkUser)) {
+                    $CommentAllowed = false;
                 }
-                $average = bcdiv((array_sum($ratings)/count($ratings)), 1, 2);
-                $user = $this->request->getSession()->getAttribut('userId');
-                var_dump($CommentAllowed);
-                $this->View('details.twig', ['reviews' => $reviews, "idMovie"=>$id, "averageRating" => $average, 'commentAllowed' => $CommentAllowed]);  
-
             }
-            else
-            {
-                $CommentAllowed = true;
-                $this->View('details.twig', ["idMovie"=>$id, "averageRating" => '-', 'commentAllowed' => $CommentAllowed]);
+            for ($i = 0; $i < count($reviews); $i++) {
+                $ratings[] = $reviews[$i]->rating();
             }
+            $average = bcdiv((array_sum($ratings) / count($ratings)), 1, 2);
+            $this->View('details.twig', ['reviews' => $reviews, "idMovie" => $id, "averageRating" => $average, 'commentAllowed' => $CommentAllowed]);
+        } else {
+            $CommentAllowed = true;
+            $this->View('details.twig', ["idMovie" => $id, "averageRating" => '-', 'commentAllowed' => $CommentAllowed]);
+        }
     }
-
-
 }

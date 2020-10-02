@@ -11,7 +11,7 @@ body
     padding: 0 10px;
 }
 .rating:not(:checked) > input {
-    position:absolute;
+position:absolute;
     top:-9999px;
 }
 .rating:not(:checked) > label {
@@ -39,4 +39,11 @@ body
 .rating > input:checked ~ label:hover ~ label,
 .rating > label:hover ~ input:checked ~ label {
     color: #c59b08;
+}
+
+
+.poster
+{
+    height: 260px;
+    overflow: hidden;
 }

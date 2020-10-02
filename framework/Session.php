@@ -11,7 +11,7 @@ class Session
     }
 
     function destroySession()
-    {   
+    {
         session_destroy();
     }
 
@@ -21,7 +21,7 @@ class Session
     }
 
     function existAttribut($name)
-    {        
+    {
         return (isset($_SESSION[$name]) && $_SESSION[$name] != "");
     }
 
@@ -30,10 +30,8 @@ class Session
     {
         if ($this->existAttribut($name)) {
             return $_SESSION[$name];
-        }
-        else {
-           // throw new \Exception("attribut $name introuvable");
-           var_dump('toto');
+        } else {
+            // throw new \Exception("attribut $name introuvable");
         }
     }
 }

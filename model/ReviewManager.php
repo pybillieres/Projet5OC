@@ -27,7 +27,6 @@ class ReviewManager extends Manager
         $req->execute(array($id));
         $row = $req->fetch();
         $review = new Review($row);
-        var_dump($review);
         return $review;
     }
 
@@ -55,12 +54,12 @@ class ReviewManager extends Manager
         return $reviews;
     }
 
-    function existReview($id)
+    /*function existReview($id)// verifier qui appelle cette fonction
     {
         $req = $this->_db->prepare('SELECT COUNT(*) FROM reviews WHERE idMovie=?');
         $req->execute(array($id));
         $nbr = $req->fetchColumn();
-    }
+    }*/
 
     function createReview(Review $review)
     {
@@ -75,7 +74,7 @@ class ReviewManager extends Manager
         ));
     }
 
-    function updateReview(Review $review) //renommer cette fonction en reportREVIEW
+    function reportReview(Review $review)
     {
         $req = $this->_db->prepare('UPDATE reviews SET reported=:reported WHERE id=:id');
         $req->execute(array(
@@ -101,5 +100,15 @@ class ReviewManager extends Manager
     {
         $req = $this->_db->prepare('DELETE FROM reviews WHERE id=? ');
         $req->execute(array($id));
+    }
+
+    function updateReview(Review $review)
+    {
+        $req = $this->_db->prepare('UPDATE reviews SET content=:content, rating=:rating WHERE id=:id');
+        $req->execute(array(
+            ':id' => $review->id(),
+            ':content' => $review->content(),
+            ':rating' => $review->rating()
+        ));
     }
 }
