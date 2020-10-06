@@ -20,14 +20,14 @@ class UserController extends SecureController
             if ($reviews != null) {
                 $reviews = array_slice($reviews, 0, 5);
             }
-            $this->View('dashBoard/UserHome.twig', ['reviews' => $reviews, 'admin' => true]);
+            $this->View('UserHome.twig', ['reviews' => $reviews, 'admin' => true]);
         } else {
             $reviews = $this->getMyReviews();
             if ($reviews != null) {
                 $reviews = array_slice($reviews, 0, 5);
             }
 
-            $this->View('dashBoard/UserHome.twig', ['reviews' => $reviews]);
+            $this->View('UserHome.twig', ['reviews' => $reviews]);
         }
     }
 
@@ -41,19 +41,19 @@ class UserController extends SecureController
     function myReviews()
     {
         $reviews = $this->getMyReviews();
-        $this->View('dashBoard/myReviews.twig', ['reviews' => $reviews]);
+        $this->View('myReviews.twig', ['reviews' => $reviews]);
     }
 
     public function myAccount()
     {
         $login = $this->request->getSession()->getAttribut('login');
         $nbrReviews = count($this->getMyReviews());
-        $this->View('dashBoard/myAccount.twig', ['pseudo' => $login, 'nbrReviews' => $nbrReviews]);
+        $this->View('myAccount.twig', ['pseudo' => $login, 'nbrReviews' => $nbrReviews]);
     }
 
     function changePassword()
     {
-        $this->View('dashBoard/changePassword.twig');
+        $this->View('changePassword.twig');
     }
 
     function confirmPassword()
@@ -78,6 +78,6 @@ class UserController extends SecureController
     {
         $manager = new UserManager;
         $users = $manager->getAllUsers();
-        $this->View('dashboard/listUsers.twig', ['users' => $users]);
+        $this->View('listUsers.twig', ['users' => $users]);
     }
 }

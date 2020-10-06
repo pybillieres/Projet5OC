@@ -87,7 +87,7 @@ class ReviewController extends Controller
         if ($this->CheckAdmin()) {
             $manager = new ReviewManager;
             $reviews = $manager->getReportedReviews();
-            $this->View('dashboard/reportedReviews.twig', ['reviews' => $reviews]);
+            $this->View('reportedReviews.twig', ['reviews' => $reviews]);
         }
     }
 
@@ -116,7 +116,7 @@ class ReviewController extends Controller
         $review = $manager->getReviewById($id);
         $i = $review->rating();
         $rating[$i] = 'checked';
-        $this->View('dashboard/modifyReview.twig', ['review' => $review, 'rating' => $rating]);
+        $this->View('modifyReview.twig', ['review' => $review, 'rating' => $rating]);
     }
 
     function sendModifyReview() //ajouter checkuser ET que c'est le bon user qui modifie le commentaire

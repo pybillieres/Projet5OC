@@ -60,7 +60,7 @@ abstract class Controller
     }
   }
 
-  function ErrorView($msg)
+  function msgView($msg)
   {
     $this->View('message.twig', ['message' => $msg]);
   }

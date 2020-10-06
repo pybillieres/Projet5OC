@@ -10,6 +10,7 @@ class ApiController extends Controller
 	function lastReviewsApi()
 	{
 
+//bloquer referer et verifier origine de la requete
 		if ($this->request->existParameter('id')) {
 			$page = $this->request->Parameter('id');
 		} else {
@@ -26,7 +27,6 @@ class ApiController extends Controller
 
 	function reponse_json($data)
 	{ //penser a ajouter variable sucess true or false
-
 		$array['result'] = $data;
 		header('Content-Type: application/json');
 		echo json_encode($array);

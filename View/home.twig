@@ -28,7 +28,9 @@
           <a class="" disabled id="pageIndex">{{page}}</a>
           <a class="" id="prvPageIndex" href="">{{page + 1}}</a>
           <span id='indexDots'>...</span>
+          {% if orderBy['action'] != 'lastComment'%}
           <a class="" id='lastPageIndex'></a>
+          {% endif %}
           <a class="" id="nxtPage" href="Movie/{{orderBy['action']}}/{{page + 1}}">Suivant</a>
         </div>
         </div>

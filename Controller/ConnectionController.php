@@ -33,20 +33,40 @@ class ConnectionController extends Controller
                     $this->request->getSession()->setAttribut('admin', $user->admin());
                     $this->redirect('User', 'UserHome');
                 } else {
-                    $this->ErrorView('Mot de passe ou login incorrect');
+                    $this->msgView('Mot de passe ou login incorrect');
                 }
             } else {
-                $this->ErrorView('Mot de passe ou login incorrect');
+                $this->msgView('Mot de passe ou login incorrect');
             }
         } else {
-            $this->ErrorView('Mot de passe incorrect');
+            $this->msgView('Mot de passe incorrect');
         }
+    }
+
+    function createAccountView()
+    {
+        $this->View("createAccount.twig");
     }
 
     function createAccount()
     {
-        $this->View("createAccount.twig");
+        $login = $this->request->Parameter('login');
+        $password = $this->request->Parameter('password');
+        $email = $this->request->Parameter('email');
+        $this->sendConfirmationMail($email);
     }
+
+    function sendConfirmationMail($to)
+    {
+        
+;        $from = "test@p-billieres.com";
+        $subject = "Vérification PHP Mail";
+        $message = "PHP mail marche";
+        $headers = "From:" . $from;
+        var_dump($from, $subject, $message, $headers);
+        //mail($to, $subject, $message, $headers);
+    }
+
 
 
     function logout()
