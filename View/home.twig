@@ -20,13 +20,13 @@
     {% include 'thumbnails.twig' %}
 
         <div class="col-12 mb-3">
-        <div class="text-center">
+        <div id='indexPages' class="text-center">
           {% if page > 1 %}
             <a class="" id="prvPage" href="Movie/{{orderBy['action']}}/{{page - 1}}">Précédent</a>
-    <a class="" id="prvPageIndex" href="">{{page - 1}}</a>
+    <a class="" id="prvPageIndex" href="Movie/{{orderBy['action']}}/{{page - 1}}">{{page - 1}}</a>
           {% endif %}
           <a class="" disabled id="pageIndex">{{page}}</a>
-          <a class="" id="prvPageIndex" href="">{{page + 1}}</a>
+          <a class="" id="nxtPageIndex" href="Movie/{{orderBy['action']}}/{{page + 1}}">{{page + 1}}</a>
           <span id='indexDots'>...</span>
           {% if orderBy['action'] != 'lastComment'%}
           <a class="" id='lastPageIndex'></a>

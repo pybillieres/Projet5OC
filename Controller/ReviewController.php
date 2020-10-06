@@ -25,16 +25,21 @@ class ReviewController extends Controller
             $id = $review->idMovie();
             $reviewsId[] = $id;
             $reviewsId = array_unique($reviewsId);
+            $nbrPages = ceil(count($reviewsId) / 20);
             if (count($reviewsId) >= 20 * $page) {
                 break;
             }
         }
         if ($page == 1) {
-            return $reviewsId;
+            $response['nbrPages'] = $nbrPages;
+            $response['reviewsId'] = $reviewsId;
+            return $response;
         } else {
-            $to = $page - 1 * 20;
+            $to = ($page - 1) * 20;
             $from = $page * 20 - 1;
-            return array_slice($reviewsId, $to, $from);
+            $response['nbrPages'] = $nbrPages;
+            $response['reviewsId'] = array_slice($reviewsId, $to, $from);
+            return $response;
         }
     }
 

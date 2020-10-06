@@ -4,6 +4,7 @@ namespace Controller;
 
 use Framework\Controller;
 use Model\UserManager;
+use Model\User;
 use Controller\UserController;
 
 class ConnectionController extends Controller
@@ -54,17 +55,20 @@ class ConnectionController extends Controller
         $password = $this->request->Parameter('password');
         $email = $this->request->Parameter('email');
         $this->sendConfirmationMail($email);
+        $data = ['login'=>$login, 'password'=>md5($password), 'email'=>$email];
+        $user = new User($data);
+        $userManager = new UserManager;
+        $userManager->createUser($user);
     }
 
     function sendConfirmationMail($to)
     {
         
-;        $from = "test@p-billieres.com";
-        $subject = "Vérification PHP Mail";
-        $message = "PHP mail marche";
+;       $from = "cinéreview@p-billieres.com";
+        $subject = "Compte CinéReview";
+        $message = "Votre inscription a bien été prise en compte";
         $headers = "From:" . $from;
-        var_dump($from, $subject, $message, $headers);
-        //mail($to, $subject, $message, $headers);
+        mail($to, $subject, $message, $headers);
     }
 
 

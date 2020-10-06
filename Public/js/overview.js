@@ -26,12 +26,34 @@ class Overview {
     }
 
     Index(nbrPages) { //permet d'afficher le nombre de page total dans l'index en bas de page
-        document.getElementById("lastPageIndex").textContent = nbrPages;
+        if (nbrPages == 0)
+        {
+            document.getElementById("indexPages").style.display = "none";
+        }
+        if (nbrPages == 1) {
+            document.getElementById("nxtPageIndex").style.display = "none";
+        }
+        if (nbrPages > 2) {
+            document.getElementById("lastPageIndex").textContent = nbrPages;
+        }
         if (nbrPages <= 3) {
             document.getElementById("indexDots").style.display = "none";
         }
-        if (nbrPages < 3) {
+        if (nbrPages > 3) {
             document.getElementById("indexDots").style.display = "inline";
+        }
+        if ((nbrPages - this.index) < 3) {
+            document.getElementById("indexDots").style.display = "none";
+        }
+        if ((nbrPages - this.index) < 2) {
+            document.getElementById("indexDots").style.display = "none";
+            document.getElementById("lastPageIndex").textContent = "";
+        }
+        if (nbrPages == this.index) {
+            document.getElementById("nxtPage").style.display = "none";
+            document.getElementById("nxtPageIndex").style.display = "none";
+            document.getElementById("lastPageIndex").textContent = "";
+
         }
     }
 
@@ -67,20 +89,23 @@ class Overview {
     {
         if (this.sortBy === "lastComment") {
             ajaxGet('api/lastReviewsApi/' + this.index, function (response) {
-
-                this.MovieByIdRequest(JSON.parse(response), function (response) {
-                    console.log(response);
+                response = JSON.parse(response);
+                this.MovieByIdRequest(response, function (response) {
                     var films = response;
-                    for (let i = 0; i < 20; i++) {
+                    console.log(films.length);
+                    console.log(response);
+                    for (let i = 0; i < films.length; i++) {
                         this.View(i, films[i]);
                     }
                 }.bind(this));
+                this.Index(response.total_pages);
             }.bind(this));
         }
 
         else {
 
             this.ListRequest(this.sortBy, this.index, function (response) {
+                console.log('toto');
                 this.Index(response.total_pages);
                 var films = response.results;
                 console.log(response);
@@ -110,12 +135,20 @@ class Overview {
     searchFilm() {
         var title = document.getElementById("searchTitle").innerText;
         this.SearchRequest(title, this.index, function (response) {
+            //console.log(response);
             this.Index(response.total_pages);
-            var films = response.results;
-            var nbrPages = response.total_pages;
-            for (let i = 0; i < 20; i++) {
-                this.View(i, films[i]);
+            if (response.total_results !== 0) {
+                var films = response.results;
+                var nbrPages = response.total_pages;
+                for (let i = 0; i < 20; i++) {
+                    this.View(i, films[i]);
+                }
             }
+            else
+            {
+                document.getElementById("pageTitle").textContent = 'Aucun résultat pour '+ title ;
+            }
+
         }.bind(this));
     }
 

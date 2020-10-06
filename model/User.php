@@ -9,6 +9,7 @@ class User extends ObjectClass
 {
     private $_id,
         $_login,
+        $_email,
         $_password,
         $_admin;
 
@@ -21,6 +22,11 @@ class User extends ObjectClass
     public function login()
     {
         return $this->_login;
+    }
+
+    public function email()
+    {
+        return $this->_email;
     }
 
     public function password()
@@ -48,6 +54,13 @@ class User extends ObjectClass
         }
     }
 
+    public function setEmail($email)
+    {
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $this->_email = $email;
+        }
+    }
+
     public function setPassword($password)
     {
         if (is_string($password)) {
@@ -57,7 +70,10 @@ class User extends ObjectClass
 
     public function setAdmin($admin)
     {
-
-        $this->_admin = $admin;
+        if (is_int($admin))
+        {
+        $this->_admin = $admin;    
+        }
+        
     }
 }
