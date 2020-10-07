@@ -14,6 +14,9 @@ class MovieController extends Controller
         $this->lastMovies();
     }
 
+    /**
+     * Génére squelette de la vue de l'accueil avec films trié en fonction de leurs dates de sortie
+     */
     function lastMovies()
     {
         if ($this->request->existParameter('id') && $this->request->Parameter('id') > 0) {
@@ -25,6 +28,9 @@ class MovieController extends Controller
         $this->View('home.twig', ['page' => $page, 'orderBy' => $orderBy]);
     }
 
+    /**
+     * Génére squelette de la vue de l'accueil avec films trié en fonction des films avec les avis les plus récents
+     */
     function orderByReviews()
     {
         if ($this->request->existParameter('id') && $this->request->Parameter('id') > 0) {
@@ -36,6 +42,9 @@ class MovieController extends Controller
         $this->View('home.twig', ['page' => $page, 'orderBy' => $orderBy]);
     }
 
+    /**
+     * Génére squelette de la vue de l'accueil avec films trié en fonction de leur valeur de popularité sur TMDB
+     */
     function orderByPopularity()
     {
         if ($this->request->existParameter('id') && $this->request->Parameter('id') > 0) {
@@ -47,6 +56,9 @@ class MovieController extends Controller
         $this->View('home.twig', ['page' => $page, 'orderBy' => $orderBy]);
     }
 
+    /**
+     * Génére squelette de la vue lors de la recherche d'un film
+     */
     function Search()
     {
         $keyword = $this->request->Parameter('keyword');
@@ -58,6 +70,9 @@ class MovieController extends Controller
         $this->View('searchResults.twig', ['keyword' => $keyword, 'page' => $page, 'action' => 'Search']);
     }
 
+    /**
+     * Génére squelette de la vue des détails d'un film, avec obtention des commentaire et vérification que l'utilisateur n'a pas déja posté d'avis
+     */
     function movieDetails()
     {
         $id = $this->request->Parameter('id');

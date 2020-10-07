@@ -70,10 +70,8 @@ class User extends ObjectClass
 
     public function setAdmin($admin)
     {
-        if (is_int($admin))
-        {
+        $admin = (int) $admin;
         $this->_admin = $admin;    
-        }
         
     }
 }

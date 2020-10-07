@@ -54,5 +54,6 @@ class Router
 
   private function manageError(\Exception $exception)
   {
+    echo $this->twig->render('error.twig', ['msgError'=>$exception->getMessage()]);
   }
 }

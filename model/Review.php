@@ -56,21 +56,25 @@ class Review extends ObjectClass
 
     public function setId($id)
     {
+        $id = (int) $id;
         $this->_id = $id;
     }
 
     public function setIdMovie($idMovie)
     {
+        $idMovie = (int) $idMovie;
         $this->_idMovie = $idMovie;
     }
 
     public function setUserId($userId)
     {
+        $userId = (int) $userId;
         $this->_userId = $userId;
     }
 
     public function setUserLogin($userLogin)
     {
+        $userLogin = (string) $userLogin;
         $this->_userLogin = $userLogin;
     }
 
@@ -81,16 +85,22 @@ class Review extends ObjectClass
 
     public function setRating($rating)
     {
-        $this->_rating = $rating;
+        $rating = (int) $rating;
+        if ($rating > 0 && $rating <= 5) {
+            $this->_rating = $rating;
+        }
     }
 
     public function setContent($content)
     {
-        $this->_content = $content;
+        if (is_string($content)) {
+            $this->_content = $content;
+        }
     }
 
     public function setReported($reported)
     {
+        $reported = (int) $reported;
         $this->_reported = $reported;
     }
 }

@@ -8,6 +8,9 @@ use Model\User;
 class UserManager extends Manager
 {
 
+    /**
+     * Récupère les données d'un utilisateur via son id
+     */
     public function getUserById($id)
     {
         $req = $this->_db->prepare('SELECT * FROM users WHERE id=?');
@@ -17,7 +20,9 @@ class UserManager extends Manager
         return $user;
     }
 
-
+    /**
+     * Récupère les données d'un utilisateur via son login
+     */
     public function getUserByLogin($login)
     {
         $req = $this->_db->prepare('SELECT * FROM users WHERE login=?');
@@ -27,8 +32,33 @@ class UserManager extends Manager
             $user = new User($row);
             return $user;
         }
+        else
+        {
+            return 0;
+        }
     }
 
+    /**
+     * Récupère les données d'un utilisateur via son email
+     */
+    public function getUserByEmail($email)
+    {
+        $req = $this->_db->prepare('SELECT * FROM users WHERE email=?');
+        $req->execute(array($email));
+        $row = $req->fetch();
+        if (is_bool($row) !== true) {
+            $user = new User($row);
+            return $user;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    /**
+     * Modifie un mot de passe dans la BDD
+     */
     public function modifyPassword(User $user)
     {
         $req = $this->_db->prepare('UPDATE users SET password=:password WHERE id=:id');
@@ -38,6 +68,9 @@ class UserManager extends Manager
         ));
     }
 
+    /**
+     * Retourne la liste complète des utilisateurs inscrits
+     */
     public function getAllUsers()
     {
         $req = $this->_db->prepare('SELECT * FROM users ORDER BY login');
@@ -49,6 +82,9 @@ class UserManager extends Manager
         return $users;
     }
 
+    /**
+     * crée un nouvel utilisateur dans la BDD
+     */
     function createUser(User $user)
     {
         var_dump($user->login());

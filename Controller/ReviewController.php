@@ -9,7 +9,9 @@ use Model\Review;
 class ReviewController extends Controller
 {
 
-
+/**
+ * Obtient les reviews d'un film selon son id
+ */
     function getReviews($id)
     {
         $manager = new ReviewManager;
@@ -17,7 +19,10 @@ class ReviewController extends Controller
         return $reviews;
     }
 
-    function lastReviewsId($page = 1) // revoir cette fonction ->doute
+/**
+ * Renvoie liste des id des derniers films commenté
+ */
+    function lastReviewsId($page = 1)
     {
         $manager = new ReviewManager;
         $reviews = $manager->getLastReviews();
@@ -43,16 +48,9 @@ class ReviewController extends Controller
         }
     }
 
-    function newReview()
-    {
-        if ($this->checkSession()) {
-            $id = $this->request->Parameter('id');
-            echo $this->twig->render('newReview.twig', ['id' => $id]);
-        } else {
-            $this->redirect('connection');
-        }
-    }
-
+/**
+ * Demande création de la review auprès du manager
+ */
     function createReview()
     {
         if ($this->checkSession()) {
@@ -70,6 +68,9 @@ class ReviewController extends Controller
         }
     }
 
+    /**
+     * Renvoie les reviews d'un utilisateur précis selon son id
+     */
     function MyReviews($userId)
     {
         $manager = new ReviewManager;
@@ -77,6 +78,9 @@ class ReviewController extends Controller
         return $reviews;
     }
 
+    /**
+     * Signalement d'une reviews et création de la vue de confirmation
+     */
     function reportReview()
     {
         $id = $this->request->Parameter('id');
@@ -87,6 +91,9 @@ class ReviewController extends Controller
         $this->View('report.twig', ['idMovie' => $review->idMovie()]);
     }
 
+    /**
+     * Renvoie la liste des reviews signalées
+     */
     function getReportedReviews()
     {
         if ($this->CheckAdmin()) {
@@ -96,36 +103,62 @@ class ReviewController extends Controller
         }
     }
 
-    function deleteReviewAdmin() //proteger, permet de supprimer n'importe quel review (sert pour moderer les commentaires)
+    /**
+     * Permet de supprimer toutes les reviews
+     */
+    function deleteReviewAdmin()
     {
+        if($this->CheckAdmin())
+        {
+            $id = $this->request->Parameter('id');
+            $manager = new ReviewManager;
+            $manager->deleteReview($id);
+            $this->redirect('Review', 'getReportedReviews');    
+        }
     }
 
-    function deleteReviewUser() //permet de supprimer seulement ses propres reviews
+    /**
+     * Permet à un administrateur de valider un commentaire signalé
+     */
+    function validReview()
     {
-    }
-
-    function validReview() //ajouter checkadmin
-    {
+        if($this->CheckAdmin())
+        {
         $id = $this->request->Parameter('id');
         $manager = new ReviewManager;
         $review = $manager->getReviewById($id);
         $review->setReported(0);
         $manager->updateReview($review);
-        $this->redirect('Review', 'getReportedReviews');
+        $this->redirect('Review', 'getReportedReviews');            
+        }
+
     }
 
-    function modifyReview() //ajouter checkuser et que c'est le bon user qui modifie le commentaire
-    {
+    /**
+     * Modification d'un commentaire par l'utilisateur qui l'a créé
+     */
+    function modifyReview()
+    {if($this->checkSession())
+        {
         $id = $this->request->Parameter('id');
         $manager = new ReviewManager;
         $review = $manager->getReviewById($id);
+        if($review->userId() == $this->request->getSession()->getAttribut('userId'))
+        {
         $i = $review->rating();
         $rating[$i] = 'checked';
-        $this->View('modifyReview.twig', ['review' => $review, 'rating' => $rating]);
+        $this->View('modifyReview.twig', ['review' => $review, 'rating' => $rating]);             
+        }
+        }
+
     }
 
-    function sendModifyReview() //ajouter checkuser ET que c'est le bon user qui modifie le commentaire
+    /**
+     * Envoie la modification à la BDD via le manager
+     */
+    function sendModifyReview()
     {
+        
         $id = $this->request->Parameter('id');
         $content = $this->request->Parameter('content');
         $rating = $this->request->Parameter('rating');

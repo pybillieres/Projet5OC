@@ -54,13 +54,6 @@ class ReviewManager extends Manager
         return $reviews;
     }
 
-    /*function existReview($id)// verifier qui appelle cette fonction
-    {
-        $req = $this->_db->prepare('SELECT COUNT(*) FROM reviews WHERE idMovie=?');
-        $req->execute(array($id));
-        $nbr = $req->fetchColumn();
-    }*/
-
     function createReview(Review $review)
     {
         $req = $this->_db->prepare('INSERT INTO reviews(idMovie, userId, userLogin, content, date, rating) VALUES(:idMovie, :userId, :userLogin, :content, :date, :rating) ');

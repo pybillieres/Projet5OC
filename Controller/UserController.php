@@ -13,6 +13,9 @@ class UserController extends SecureController
         $this->UserHome();
     }
 
+    /**
+     * Crée la vue de la page d'accueil des utilisateurs selon qu'ils sont administrateur ou non 
+     */
     public function UserHome()
     {
         if ($this->CheckAdmin()) {
@@ -20,17 +23,20 @@ class UserController extends SecureController
             if ($reviews != null) {
                 $reviews = array_slice($reviews, 0, 5);
             }
-            $this->View('UserHome.twig', ['reviews' => $reviews, 'admin' => true]);
+            $this->View('userHome.twig', ['reviews' => $reviews, 'admin' => true]);
         } else {
             $reviews = $this->getMyReviews();
             if ($reviews != null) {
                 $reviews = array_slice($reviews, 0, 5);
             }
 
-            $this->View('UserHome.twig', ['reviews' => $reviews]);
+            $this->View('userHome.twig', ['reviews' => $reviews]);
         }
     }
 
+    /**
+     * Recupere auprès du reviewController les reviews d'un utilisateur en fonction de son Id puis la renvoie
+     */
     function getMyReviews()
     {
         $controller = new ReviewController;
@@ -38,12 +44,18 @@ class UserController extends SecureController
         return $reviews;
     }
 
+    /**
+     * crée la vue avec reviews de l'utilisateur
+     */
     function myReviews()
     {
         $reviews = $this->getMyReviews();
         $this->View('myReviews.twig', ['reviews' => $reviews]);
     }
 
+    /**
+     * créé la vue qui affiche informations sur le compte de l'utilisateur
+     */
     public function myAccount()
     {
         $login = $this->request->getSession()->getAttribut('login');
@@ -51,11 +63,17 @@ class UserController extends SecureController
         $this->View('myAccount.twig', ['pseudo' => $login, 'nbrReviews' => $nbrReviews]);
     }
 
+    /**
+     * créé la vue de changement de mot de passe
+     */
     function changePassword()
     {
         $this->View('changePassword.twig');
     }
 
+    /**
+     * envoie le changement de mot de passe au manager pour mise a jour de la BDD
+     */
     function confirmPassword()
     {
         if ($this->checkSession()) {
@@ -74,10 +92,15 @@ class UserController extends SecureController
         }
     }
 
+    /**
+     * Recupere la liste des utilisateurs et l'affiche
+     */
     function listUsers()
     {
-        $manager = new UserManager;
-        $users = $manager->getAllUsers();
-        $this->View('listUsers.twig', ['users' => $users]);
+        if ($this->CheckAdmin()) {
+            $manager = new UserManager;
+            $users = $manager->getAllUsers();
+            $this->View('listUsers.twig', ['users' => $users]);
+        }
     }
 }

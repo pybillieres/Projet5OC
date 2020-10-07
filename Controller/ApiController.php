@@ -7,9 +7,11 @@ use Framework\Controller;
 class ApiController extends Controller
 {
 
+	/**
+	 * Récupère les id des films ayant recu des commentaires
+	 */
 	function lastReviewsApi()
 	{
-//bloquer referer et verifier origine de la requete
 		if ($this->request->existParameter('id')) {
 			$page = $this->request->Parameter('id');
 		} else {
@@ -20,8 +22,11 @@ class ApiController extends Controller
 		$this->reponse_json($reviews);
 	}
 
+	/**
+	 * converti la réponse de l'API en JSON
+	 */
 	function reponse_json($data)
-	{ //penser a ajouter variable sucess true or false
+	{
 
 		$array['result'] = $data['reviewsId'];
 		$array['total_pages'] = $data['nbrPages'];
