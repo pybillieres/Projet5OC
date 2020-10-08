@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Framework\SecureController;
+use Framework\Configuration;
 use Model\Review;
 use Model\UserManager;
 
@@ -60,7 +61,11 @@ class UserController extends SecureController
     {
         $login = $this->request->getSession()->getAttribut('login');
         $nbrReviews = count($this->getMyReviews());
-        $this->View('myAccount.twig', ['pseudo' => $login, 'nbrReviews' => $nbrReviews]);
+        if (file_exists('upload/' . $this->request->getSession()->getAttribut('login') . 'profil.jpg')) {
+            $this->View('myAccount.twig', ['pseudo' => $login, 'nbrReviews' => $nbrReviews, 'imgProfil' => true]);
+        } else {
+            $this->View('myAccount.twig', ['pseudo' => $login, 'nbrReviews' => $nbrReviews]);
+        }
     }
 
     /**
@@ -101,6 +106,33 @@ class UserController extends SecureController
             $manager = new UserManager;
             $users = $manager->getAllUsers();
             $this->View('listUsers.twig', ['users' => $users]);
+        }
+    }
+
+    function modifyImg()
+    {
+        $this->View('modifyImg.twig');
+    }
+
+    function uploadProfilImg()
+    {
+        if (isset($_FILES['file']) and $_FILES['file']['error'] == 0) {
+            $info = pathinfo($_FILES['file']['name']);
+            if ($_FILES['file']['size'] <= 1024000) {
+                if ($info['extension'] == 'jpg') {
+                    $name = $this->request->getSession()->getAttribut('login');
+                    move_uploaded_file($_FILES['file']['tmp_name'], 'upload/' . basename($name . "profil.jpg"));
+                    $this->redirect('user', 'myAccount');
+                } else {
+                    $this->msgView('Le fichier doit être au format .jpg');
+                }
+            } else {
+                $this->msgView('Le fichier est trop volumineux');
+            }
+        }
+        else
+        {
+            $this->msgView('erreur lors du chargement du fichier');
         }
     }
 }

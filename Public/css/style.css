@@ -5,8 +5,10 @@ body
 
 
 /*Notation 5 étoiles*/
+
+
 .rating {
-    float: left;
+    float: right;
     height: 46px;
     padding: 0 10px;
 }

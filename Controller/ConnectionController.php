@@ -33,7 +33,6 @@ class ConnectionController extends Controller
             $password = md5($this->request->parameter('password'));
             $userManager = new UserManager;
             $user = $userManager->getUserByLogin($login);
-            var_dump($user);
             if ($user !== 0 && $user !== null) {
                 if ($password === $user->password()) {
                     $this->request->getSession()->setAttribut('userId', $user->id());

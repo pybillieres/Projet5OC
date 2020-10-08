@@ -106,7 +106,7 @@ class ReviewController extends Controller
     /**
      * Permet de supprimer toutes les reviews
      */
-    function deleteReviewAdmin()
+    function deleteReview()
     {
         if($this->CheckAdmin())
         {
