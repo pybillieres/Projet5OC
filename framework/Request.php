@@ -30,7 +30,7 @@ class Request
   public function Parameter($name)
   {
     if ($this->existParameter($name)) {
-      return $this->parameters[$name];
+      return htmlspecialchars($this->parameters[$name]);
     } else
       throw new \Exception;
   }
