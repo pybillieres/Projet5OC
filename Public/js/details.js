@@ -69,7 +69,6 @@ class Details {
     getTitles() {
         var movieId = document.getElementsByClassName("movie");
         var id;
-        console.log(movieId[0].id);
         for (let i = 0; i <= movieId.length - 1; i++) {
             id = movieId[i].id
             this.request(id, function (response) {

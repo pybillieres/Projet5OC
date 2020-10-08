@@ -8,7 +8,7 @@ body
 
 
 .rating {
-    float: right;
+    float: left;
     height: 46px;
     padding: 0 10px;
 }
@@ -43,7 +43,10 @@ position:absolute;
     color: #c59b08;
 }
 
-
+#star-block
+{
+    height: 50px;
+}
 .poster
 {
     height: 240px;
