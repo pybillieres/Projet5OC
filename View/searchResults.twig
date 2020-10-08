@@ -3,24 +3,27 @@
 {% block head %}<title>résultats de la recherche</title>{% endblock %}
 
 {% block content %}
-    <h1 id="pageTitle">Résultats de la recherche pour "<span id="searchTitle">{{keyword}}</span>"</h1>
-    <div class="container">
-    {% include 'thumbnails.twig' %}  
-            <div class="col-12 mb-3">
-        <div id='indexPages' class="text-center">
-          {% if page > 1 %}
-            <a class="" id="prvPage" href="Movie/Search/{{page - 1}}/{{keyword}}">Précédent</a>
-    <a class="" id="prvPageIndex" href="Movie/Search/{{page - 1}}/{{keyword}}">{{page - 1}}</a>
-          {% endif %}
-          <a class="" disabled id="pageIndex">{{page}}</a>
-          <a class="" id="nxtPageIndex" href="Movie/Search/{{page + 1}}/{{keyword}}">{{page + 1}}</a>
-          <span id='indexDots'>...</span>
-          <a class="" id='lastPageIndex'></a>
-          <a class="" id="nxtPage" href="Movie/Search/{{page + 1}}/{{keyword}}">Suivant</a>
-        </div>
-        </div>
+
+<h1 id="pageTitle">Résultats de la recherche pour "<span id="searchTitle">{{keyword}}</span>"</h1>
+<div class="container">
+  {% include 'thumbnails.twig' %}  
+  <div class="col-12 mb-3">
+    <div id='indexPages' class="text-center">
+      {% if page > 1 %}
+      <a class="" id="prvPage" href="Movie/Search/{{page - 1}}/{{keyword}}">Précédent</a>
+      <a class="" id="prvPageIndex" href="Movie/Search/{{page - 1}}/{{keyword}}">{{page - 1}}</a>
+      {% endif %}
+      <a class="" disabled id="pageIndex">{{page}}</a>
+      <a class="" id="nxtPageIndex" href="Movie/Search/{{page + 1}}/{{keyword}}">{{page + 1}}</a>
+      <span id='indexDots'>...</span>
+      <a class="" id='lastPageIndex'></a>
+      <a class="" id="nxtPage" href="Movie/Search/{{page + 1}}/{{keyword}}">Suivant</a>
     </div>
- </div>
-  <script src="public/js/searchMain.js"></script>
+  </div>
+</div>
+
+<script src="public/js/ajax.js"></script>
+<script src="public/js/overview.js"></script>
+<script src="public/js/searchMain.js"></script>
   
 {% endblock %}

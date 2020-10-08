@@ -3,20 +3,21 @@
 {% block head %}<title>Modération des commentaires</title>{% endblock %}
 
 {% block content %}
-  {% if reviews != null %}
-        {% for review in  reviews %}
-            <div class="col-12">
-              <div class="card mb-4 box-shadow">
-                <div class="card-body">
-                  <p class="card-title text-center">{{review.pseudo}}<p>
-                  <p class="card-text">{{review.content}}</p>
-                      <a href='review/validReview/{{review.id}}' class="btn btn-secondary float-right">Conserver</a>
-                      <a  href='review/deleteReview/{{review.id}}' class="btn btn-secondary float-left">Supprimer</a>
-                </div>
-              </div>
-            </div>  
-        {% endfor %}
-  {% else %}
-    <p>Pas de commentaires signalés pour le moment</p>
-  {% endif %}
+{% if reviews != null %}
+  {% for review in  reviews %}
+  <div class="col-12">
+    <div class="card mb-4 box-shadow">
+      <div class="card-body">
+        <p class="card-title text-center">{{review.pseudo}}<p>
+        <p class="card-text">{{review.content}}</p>
+        <a href='review/validReview/{{review.id}}' class="btn btn-secondary float-right">Conserver</a>
+        <a href='review/deleteReview/{{review.id}}' class="btn btn-secondary float-left">Supprimer</a>
+      </div>
+    </div>
+  </div>  
+  {% endfor %}
+{% else %}
+<p class='text-center'><strong>Pas de commentaires signalés pour le moment</strong></p>
+{% endif %}
+
 {% endblock %}

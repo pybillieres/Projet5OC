@@ -93,6 +93,7 @@ class UserController extends SecureController
                 $userManager->modifyPassword($user);
                 $this->redirect('user');
             } else {
+                $this->msgView('Les mots de passe saisis ne corresponde pas entre eux');
             }
         }
     }

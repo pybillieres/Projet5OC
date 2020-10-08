@@ -4,45 +4,39 @@
 
 {% block content %}
 
-      <div class="album py-5 bg-light">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="card mb-4 box-shadow">
-                <div class="card-body">
-                  <p class="card-title text-center">Utilisateurs<p>
-                  <table class='table'>
-                    <thead>
-                      <tr>
-                      <th scope='col'>login</th>
-                      <th scope='col'>Administrateur</th>
-                      <th scope='col'></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {% for user in users %}
-                      
-                        <tr>
-                        <td  >{{user.login}}</td>
-                        {% if user.admin == 1 %}
-                        <td>oui</td>
-                        {% else %}
-                        <td>non</td>
-                        {% endif %}
-                        </tr>
-                      {% endfor %}
-                    </tbody>
-                    </table>
-                  {% for review in reviews %}
-                  
-                  {% endfor %}
-                </div>
-              </div>
-            </div>
+<div class="album py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card mb-4 box-shadow">
+          <div class="card-body">
+            <p class="card-title text-center">Utilisateurs<p>
+            <table class='table'>
+              <thead>
+                <tr>
+                <th scope='col'>login</th>
+                <th scope='col'>Administrateur</th>
+                <th scope='col'></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for user in users %}
+                <tr>
+                  <td  >{{user.login}}</td>
+                  {% if user.admin == 1 %}
+                  <td>oui</td>
+                  {% else %}
+                  <td>non</td>
+                  {% endif %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-          
-<script src='public/js/myReviewsMain.js'></script>
-<script src='public/js/details.js'></script>
+    </div>
+  </div>
+</div>
+
 {% endblock %}

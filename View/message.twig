@@ -4,17 +4,17 @@
 
 {% block content %}
 
-        <div class="container">
-
-          <div class="row">
-            <div class="col-12">
-                <div class="card mb-4 box-shadow">
-                <div class="card-body text-center">
-                <p >{{message}}</p>
-                <a href='index.php' class='text-center'>retourner à la page d'accueil</a>
-                </div>
-                </div>
-                </div>
-            </div>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4 box-shadow">
+        <div class="card-body text-center">
+          <p >{{message}}</p>
+          <a href="javascript: history.go(-1)" class='text-center'>retourner à la page précédente</a>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}

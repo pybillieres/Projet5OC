@@ -26,8 +26,7 @@ class Overview {
     }
 
     Index(nbrPages) { //permet d'afficher le nombre de page total dans l'index en bas de page
-        if (nbrPages == 0)
-        {
+        if (nbrPages == 0) {
             document.getElementById("indexPages").style.display = "none";
         }
         if (nbrPages == 1) {
@@ -144,9 +143,8 @@ class Overview {
                     this.View(i, films[i]);
                 }
             }
-            else
-            {
-                document.getElementById("pageTitle").textContent = 'Aucun résultat pour '+ title ;
+            else {
+                document.getElementById("pageTitle").textContent = 'Aucun résultat pour ' + title;
             }
 
         }.bind(this));

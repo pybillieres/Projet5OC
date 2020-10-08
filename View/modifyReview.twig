@@ -2,34 +2,31 @@
 
 {% block head %}<title>Modifier mon commentaire</title>{% endblock %}
 
-
 {% block content %}
 
 <div class='container'>
-<div class='row'>
-<form method=post action='index.php' class='col-lg-12 text-center'>
-  <div class="rating text-center">
-    <input type="radio" id="star5" name="rating" value="5" {{rating[5]}}/>
-    <label for="star5" title="text">5 stars</label>
-    <input type="radio" id="star4" name="rating" value="4" {{rating[4]}}/>
-    <label for="star4" title="text">4 stars</label>
-    <input type="radio" id="star3" name="rating" value="3" {{rating[3]}}/>
-    <label for="star3" title="text">3 stars</label>
-    <input type="radio" id="star2" name="rating" value="2" {{rating[2]}}/>
-    <label for="star2" title="text">2 stars</label>
-    <input type="radio" id="star1" name="rating" value="1" {{rating[1]}}/>
-    <label for="star1" title="text">1 star</label>
+  <div class='row'>
+    <form method=post action='index.php' class='col-lg-12 text-center'>
+      <div class="rating text-center">
+        <input type="radio" id="star5" name="rating" value="5" {{rating[5]}}/>
+        <label for="star5" title="text">5 stars</label>
+        <input type="radio" id="star4" name="rating" value="4" {{rating[4]}}/>
+        <label for="star4" title="text">4 stars</label>
+        <input type="radio" id="star3" name="rating" value="3" {{rating[3]}}/>
+        <label for="star3" title="text">3 stars</label>
+        <input type="radio" id="star2" name="rating" value="2" {{rating[2]}}/>
+        <label for="star2" title="text">2 stars</label>
+        <input type="radio" id="star1" name="rating" value="1" {{rating[1]}}/>
+        <label for="star1" title="text">1 star</label>
+      </div>
+      <label for='content' class='text-center col-lg-12'>Mon avis sur le film</label>
+      <textarea name="content" rows="10" class='col-lg-12'>{{review.content}}</textarea>
+      <input type="hidden" name='action' value='sendModifyReview'>
+      <input type="hidden" name='controller' value='review'>
+      <input type="hidden" name='id' value={{review.id}}>
+      <input type="submit" value="Valider" class="btn btn-primary mt-2">
+    </form> 
   </div>
-
-<label for='content' class='text-center col-lg-12'>Mon avis sur le film</label>
-    <textarea name="content" rows="10" class='col-lg-12'>{{review.content}}</textarea>
-    <input type="hidden" name='action' value='sendModifyReview'>
-    <input type="hidden" name='controller' value='review'>
-    <input type="hidden" name='id' value={{review.id}}>
-    <input type="submit" value="Valider" class="btn btn-primary mt-2">
-</form> 
 </div>
-</div>
-
 
 {% endblock %}

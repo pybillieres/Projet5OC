@@ -2,38 +2,40 @@
 
 {% block head %}<title>Accueil</title>{% endblock %}
 
-
 {% block content %}
-    <h1 id="pageTitle"></h1>
-    <div class="col-12 mb-5" id="sortBy">
-      <div class="dropdown">
-      <span>Trier par : </span></i>
-        <button class="btn btn-secondary dropdown-toggle " type="button" data-toggle="dropdown"><span class={{orderBy['parameter']}} id="orderBy">{{orderBy['label']}}</span></button>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="Movie/lastMovies">Le Plus récent</a>
-          <a class="dropdown-item" href="Movie/orderByReviews">Avis le plus récent</a>
-          <a class="dropdown-item" href="Movie/orderByPopularity">Le plus populaire</a>
-        </div>
+<h1 id="pageTitle"></h1>
+<div class="col-12 mb-5" id="sortBy">
+  <div class="dropdown">
+    <span>Trier par : </span>
+    <button class="btn btn-secondary dropdown-toggle " type="button" data-toggle="dropdown"><span class={{orderBy['parameter']}} id="orderBy">{{orderBy['label']}}</span></button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="Movie/lastMovies">Le Plus récent</a>
+      <a class="dropdown-item" href="Movie/orderByReviews">Avis le plus récent</a>
+      <a class="dropdown-item" href="Movie/orderByPopularity">Le plus populaire</a>
+    </div>
+  </div>
+</div>
+<div class="container">
+  {% include 'thumbnails.twig' %}
+    <div class="col-12 mb-3">
+      <div id='indexPages' class="text-center">
+      {% if page > 1 %}
+        <a class="" id="prvPage" href="Movie/{{orderBy['action']}}/{{page - 1}}">Précédent</a>
+        <a class="" id="prvPageIndex" href="Movie/{{orderBy['action']}}/{{page - 1}}">{{page - 1}}</a>
+      {% endif %}
+      <a class="" disabled id="pageIndex">{{page}}</a>
+      <a class="" id="nxtPageIndex" href="Movie/{{orderBy['action']}}/{{page + 1}}">{{page + 1}}</a>
+      <span id='indexDots'>...</span>
+      {% if orderBy['action'] != 'lastComment'%}
+        <a class="" id='lastPageIndex'></a>
+      {% endif %}
+        <a class="" id="nxtPage" href="Movie/{{orderBy['action']}}/{{page + 1}}">Suivant</a>
       </div>
-    </div>
-    <div class="container">
-    {% include 'thumbnails.twig' %}
+  </div>
+</div>
 
-        <div class="col-12 mb-3">
-        <div id='indexPages' class="text-center">
-          {% if page > 1 %}
-            <a class="" id="prvPage" href="Movie/{{orderBy['action']}}/{{page - 1}}">Précédent</a>
-    <a class="" id="prvPageIndex" href="Movie/{{orderBy['action']}}/{{page - 1}}">{{page - 1}}</a>
-          {% endif %}
-          <a class="" disabled id="pageIndex">{{page}}</a>
-          <a class="" id="nxtPageIndex" href="Movie/{{orderBy['action']}}/{{page + 1}}">{{page + 1}}</a>
-          <span id='indexDots'>...</span>
-          {% if orderBy['action'] != 'lastComment'%}
-          <a class="" id='lastPageIndex'></a>
-          {% endif %}
-          <a class="" id="nxtPage" href="Movie/{{orderBy['action']}}/{{page + 1}}">Suivant</a>
-        </div>
-        </div>
-    </div>
-  <script src="public/js/homeMain.js"></script>
+<script src="public/js/ajax.js"></script>
+<script src="public/js/overview.js"></script>
+<script src="public/js/homeMain.js"></script>
+
 {% endblock %}

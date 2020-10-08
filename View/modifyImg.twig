@@ -4,20 +4,18 @@
 
 {% block content %}
 
-
-            <div class="col-md-12">
-              <div class="card mb-4 box-shadow">
-              <p class='text-center'>L'image doit être au format .jpg et peser moins de 10 Ko</p>
-              <div class="card-body ">
-<form action="index.php" method="post" enctype="multipart/form-data" class='text-center'>
-<input type="file" name="file" class='btn btn-primary mb-5'/><br />
-<input type="hidden" name='action' value='uploadProfilImg'>
-<input type='hidden' name='controller' value='user'>
-<input type="submit" value="Envoyer le fichier" class='btn btn-primary'/>
-
-</form>
-</div>
-</div>
+<div class="col-md-12">
+  <div class="card mb-4 box-shadow">
+      <p class='text-center'>L'image doit être au format .jpg et peser moins de 10 Ko</p>
+      <div class="card-body ">
+        <form action="index.php" method="post" enctype="multipart/form-data" class='text-center'>
+          <input type="file" name="file" class='btn btn-primary mb-5'/><br />
+          <input type="hidden" name='action' value='uploadProfilImg'>
+          <input type='hidden' name='controller' value='user'>
+          <input type="submit" value="Envoyer le fichier" class='btn btn-primary'/>
+        </form>
+      </div>
+  </div>
 </div>
 
 {% endblock %}

@@ -4,47 +4,45 @@
 
 {% block content %}
 
-      <div class="album py-5 bg-light">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="card mb-4 box-shadow">
-                <div class="card-body">
-                  <p class="card-title text-center">Mes derniers avis</p>
-                  <table class='table'>
-                    <thead>
-                      <tr>
-                      <th scope='col'>Titre du film</th>
-                      <th scope='col'>Date</th>
-                      <th scope='col'>Note</th>
-                      <th scope='col'>Contenu</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {% for review in reviews %}
-                      
-                        <tr>
-                        <td id={{review.idMovie}} class='movie'></td>
-                        <td>{{review.date}}</td>
-                        <td>{% for i in 1..5 %}
-                              {% set starClass = (review.rating >= i ? "fas fa-star" : "far fa-star")  %}
-                              <i class="{{ starClass }}"></i>
-                              {% endfor %}</td>
-                        <td><a href='review/modifyReview/{{review.id}}'>{{review.content | slice(0, 30)}}</a></td>
-                        </tr>
-                      {% endfor %}
-                    </tbody>
-                    </table>
-                  {% for review in reviews %}
-                  
-                  {% endfor %}
-                </div>
-              </div>
-            </div>
+<div class="album py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card mb-4 box-shadow">
+          <div class="card-body">
+            <p class="card-title text-center">Mes derniers avis</p>
+            <table class='table'>
+              <thead>
+                <tr>
+                  <th scope='col'>Titre du film</th>
+                  <th scope='col'>Date</th>
+                  <th scope='col'>Note</th>
+                  <th scope='col'>Contenu</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for review in reviews %}
+                <tr>
+                  <td id={{review.idMovie}} class='movie'></td>
+                  <td>{{review.date}}</td>
+                  <td>{% for i in 1..5 %}
+                    {% set starClass = (review.rating >= i ? "fas fa-star" : "far fa-star")  %}
+                    <i class="{{ starClass }}"></i>
+                    {% endfor %}
+                  </td>
+                  <td><a href='review/modifyReview/{{review.id}}'>{{review.content | slice(0, 30)}}</a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
           
-<script src='public/js/myReviewsMain.js'></script>
 <script src='public/js/details.js'></script>
+<script src='public/js/myReviewsMain.js'></script>
+
 {% endblock %}
