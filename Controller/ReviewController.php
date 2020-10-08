@@ -58,7 +58,7 @@ class ReviewController extends Controller
             $userLogin = $this->request->getSession()->getAttribut('login');
             $content = $this->request->parameter('content');
             $date = date("Y-m-d H:i");
-            $idMovie = $this->request->Parameter('idMovie');
+            $idMovie = $this->request->Parameter('id');
             $rating = $this->request->Parameter('rating');
             $data = ['userId' => $userId, 'userLogin' => $userLogin, 'content' => $content, 'date' => $date, 'idMovie' => $idMovie, 'rating' => $rating];
             $review = new Review($data);
@@ -158,11 +158,10 @@ class ReviewController extends Controller
      */
     function sendModifyReview()
     {
-        
         $id = $this->request->Parameter('id');
         $content = $this->request->Parameter('content');
         $rating = $this->request->Parameter('rating');
-        $manager = new ReviewManager;
+        /*$manager = new ReviewManager;
         $review = $manager->getReviewById($id);
 
         if ($review->userId() == $this->request->getSession()->getAttribut('userId')) {
@@ -170,6 +169,6 @@ class ReviewController extends Controller
             $review->setRating($rating);
             $manager->updateReview($review);
             $this->redirect('user', 'myReviews');
-        }
+        }*/
     }
 }

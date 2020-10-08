@@ -73,13 +73,9 @@ class ConnectionController extends Controller
         if ($userManager->getUserByLogin($login) == 0 && $userManager->getUserByEmail($email) == 0) {
             $userManager->createUser($user);
             $this->msgView('Votre demande a été prise en compte, vous pouvez maintenant vous connecter depuis le lien Connection');
-        }
-        elseif ($userManager->getUserByLogin($login) !== 0)
-        {
+        } elseif ($userManager->getUserByLogin($login)) {
             $this->msgView('Ce login est déja utilisé');
-        }
-        elseif ($userManager->getUserByEmail($email) !== 0)
-        {
+        } elseif ($userManager->getUserByEmail($email)) {
             $this->msgView('Cet email est déja utilisé');
         }
     }

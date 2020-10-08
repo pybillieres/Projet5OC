@@ -87,7 +87,6 @@ class UserManager extends Manager
      */
     function createUser(User $user)
     {
-        var_dump($user->login());
         $req = $this->_db->prepare('INSERT INTO users(id, login, email, password, admin) VALUES(:id, :login, :email, :password, :admin) ');
         $req->execute(array(
             ':id'=>0,

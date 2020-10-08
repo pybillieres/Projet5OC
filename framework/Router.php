@@ -15,7 +15,7 @@ class Router
 
   public function routeRequest()
   {
-    try {
+   try {
       $request = new Request(array_merge($_GET, $_POST));
       $controller = $this->createController($request);
       $action = $this->createAction($request);
@@ -54,6 +54,6 @@ class Router
 
   private function manageError(\Exception $exception)
   {
-    echo $this->twig->render('error.twig', ['msgError'=>$exception->getMessage()]);
+    echo file_get_contents("View/error.twig");
   }
 }

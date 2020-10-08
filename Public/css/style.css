@@ -14,7 +14,8 @@ body
 }
 .rating:not(:checked) > input {
 position:absolute;
-    top:-9999px;
+    /*top:-9999px;*/
+    visibility: hidden;
 }
 .rating:not(:checked) > label {
     float:right;

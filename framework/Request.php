@@ -30,8 +30,8 @@ class Request
   public function Parameter($name)
   {
     if ($this->existParameter($name)) {
-      return htmlSpecialChars($this->parameters[$name]);
-    } else //paramètre introuvable
+      return $this->parameters[$name];
+    } else
       throw new \Exception;
   }
 }
